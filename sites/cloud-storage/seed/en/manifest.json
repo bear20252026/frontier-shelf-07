@@ -1,0 +1,284 @@
+{
+  "folders": [
+    {
+      "id": "portfolio",
+      "parentId": null,
+      "name": "Portfolio",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "photos",
+      "parentId": "portfolio",
+      "name": "Photography",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "documents",
+      "parentId": "portfolio",
+      "name": "Documents",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "projects",
+      "parentId": "portfolio",
+      "name": "Projects",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "archive",
+      "parentId": "portfolio",
+      "name": "Archive",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "inspiration",
+      "parentId": null,
+      "name": "Inspiration",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "visual",
+      "parentId": "inspiration",
+      "name": "Visual research",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "personal",
+      "parentId": null,
+      "name": "Personal",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "inbox",
+      "parentId": "personal",
+      "name": "Inbox",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    }
+  ],
+  "files": [
+    {
+      "source": "mountain-01.jpg",
+      "name": "Above the clouds.jpg",
+      "folderId": "photos",
+      "tags": [
+        "Photography"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-1",
+      "size": 139832,
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": true,
+      "deletedAt": null
+    },
+    {
+      "source": "coast-03.jpg",
+      "name": "Tidal mirror.jpg",
+      "folderId": "photos",
+      "tags": [
+        "Photography"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-2",
+      "size": 125161,
+      "createdAt": 1789718400000,
+      "modifiedAt": 1789718400000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "forest-01.jpg",
+      "name": "Light in the mist.jpg",
+      "folderId": "photos",
+      "tags": [
+        "Photography"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-3",
+      "size": 306536,
+      "createdAt": 1789714800000,
+      "modifiedAt": 1789714800000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "desert-01.jpg",
+      "name": "Dune arc.jpg",
+      "folderId": "photos",
+      "tags": [
+        "Photography"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-4",
+      "size": 159233,
+      "createdAt": 1789711200000,
+      "modifiedAt": 1789711200000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "mountain-03.jpg",
+      "name": "Mirror lake.jpg",
+      "folderId": "photos",
+      "tags": [
+        "Photography"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-5",
+      "size": 214180,
+      "createdAt": 1789707600000,
+      "modifiedAt": 1789707600000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "coast-09.jpg",
+      "name": "Quiet cove.jpg",
+      "folderId": "photos",
+      "tags": [
+        "Photography"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-6",
+      "size": 457264,
+      "createdAt": 1789704000000,
+      "modifiedAt": 1789704000000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "en/welcome.pdf",
+      "name": "Welcome to Cloud.pdf",
+      "folderId": "documents",
+      "tags": [
+        "Getting started"
+      ],
+      "mime": "application/pdf",
+      "id": "sample-7",
+      "size": 1778,
+      "createdAt": 1789700400000,
+      "modifiedAt": 1789700400000,
+      "starred": true,
+      "deletedAt": null
+    },
+    {
+      "source": "en/creative-brief.pdf",
+      "name": "Creative brief.pdf",
+      "folderId": "documents",
+      "tags": [
+        "Project"
+      ],
+      "mime": "application/pdf",
+      "id": "sample-8",
+      "size": 1577,
+      "createdAt": 1789696800000,
+      "modifiedAt": 1789696800000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "en/field-notes.md",
+      "name": "Field notes.md",
+      "folderId": "documents",
+      "tags": [
+        "Notes"
+      ],
+      "mime": "text/plain",
+      "id": "sample-9",
+      "size": 180,
+      "createdAt": 1789693200000,
+      "modifiedAt": 1789693200000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "en/project-plan.csv",
+      "name": "Project plan.csv",
+      "folderId": "projects",
+      "tags": [
+        "Project"
+      ],
+      "mime": "text/csv",
+      "id": "sample-10",
+      "size": 143,
+      "createdAt": 1789689600000,
+      "modifiedAt": 1789689600000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "en/sample-library.txt",
+      "name": "Sample library.txt",
+      "folderId": "documents",
+      "tags": [
+        "Getting started"
+      ],
+      "mime": "text/plain",
+      "id": "sample-11",
+      "size": 247,
+      "createdAt": 1789686000000,
+      "modifiedAt": 1789686000000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "en/readme.md",
+      "name": "Archive notes.md",
+      "folderId": "archive",
+      "tags": [
+        "Notes"
+      ],
+      "mime": "text/plain",
+      "id": "sample-12",
+      "size": 69,
+      "createdAt": 1789682400000,
+      "modifiedAt": 1789682400000,
+      "starred": false,
+      "deletedAt": null
+    }
+  ],
+  "activity": [
+    {
+      "id": "welcome",
+      "action": "welcome",
+      "name": "Cloud",
+      "at": 1789722000000
+    }
+  ]
+}

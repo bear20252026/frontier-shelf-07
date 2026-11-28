@@ -1,0 +1,14 @@
+/* Keep the vivid gallery; borrow HELD's clearer hierarchy and connected transitions. */
+#stage{height:calc(100dvh - 264px)}
+.gallery-footer{height:160px;max-width:1220px}
+.selected-row{grid-template-columns:minmax(170px,1fr) auto auto;gap:30px}
+.frame-picker{display:flex;gap:5px;align-items:center}
+.frame-picker button{width:24px;height:40px;position:relative;transition:width .25s ease}
+.frame-picker button::before{content:'';position:absolute;left:0;right:0;top:14px;bottom:14px;background:var(--frame-color);opacity:.48;transition:opacity .25s,top .25s,bottom .25s}
+.frame-picker button[aria-pressed=true]{width:38px}.frame-picker button[aria-pressed=true]::before{top:9px;bottom:9px;opacity:1}
+.frame-picker button:hover::before{opacity:1}
+.detail-tools{display:flex;gap:24px;align-items:center}
+@media(max-width:1000px){.selected-row{gap:20px}.gallery-actions{gap:20px}.frame-picker button{width:15px}.frame-picker button[aria-pressed=true]{width:25px}.intro p{font-size:11px}}
+@media(max-width:760px){.selected-row{grid-template-columns:1fr auto}.frame-picker{grid-column:1/-1;grid-row:2;justify-content:center}.frame-picker button{height:26px;width:28px}.frame-picker button::before{top:10px;bottom:10px}.frame-picker button[aria-pressed=true]{width:38px}.frame-picker button[aria-pressed=true]::before{top:7px;bottom:7px}.gallery-footer{height:196px}.selected-row{row-gap:6px}#stage{height:calc(100dvh - 300px)}#gallery-help{margin-top:5px}}
+@media(max-width:600px){#stage{height:calc(100dvh - 352px);min-height:300px}.gallery-footer{height:214px}.selected-row{min-height:134px}.intro h1{font-size:32px}.site-header{height:138px}#gallery-help{text-align:center}.gallery-actions{gap:6px}}
+@media(prefers-reduced-motion:reduce){.frame-picker button,.frame-picker button::before{transition:none}}

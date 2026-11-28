@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light"/>
+  <title>KIMI · From Touch to Sound</title>
+  <link rel="stylesheet" href="assets/reference/sound-path.css"/>
+</head>
+<body>
+  <iframe id="scene" src="reference.html?freeze=1&amp;soundpath=1" title="Piano section and sound-producing systems" allow="autoplay" loading="eager"></iframe>
+  <header class="masthead">
+    <a aria-label="Return to the opening piano" class="wordmark" href="sound-path.html"><span>KIMI</span><span class="masthead-rule" aria-hidden="true"></span><span id="headerTitle">From touch to sound</span></a>
+    <div class="header-tools"><button id="languageToggle" type="button" aria-label="English">EN</button><a class="inspect-link" href="reference.html?freeze=1" id="inspectLink">Explore freely ↗</a></div>
+  </header>
+  <main class="narrative" aria-label="Current piano layer">
+    <p class="chapter-meta"><span id="chapterCount">00 / 07</span></p>
+    <div class="chapter-copy" aria-live="polite" aria-atomic="true"><h1 id="chapterTitle">From touch to sound.</h1><p id="chapterDescription">A small movement becomes room-filling sound. Open the piano to follow the parts that make it possible.</p></div>
+    <p id="chapterParts">Keys · Action · Strings · Soundboard</p>
+  </main>
+  <footer class="transport-wrap">
+    <div class="scrubber" role="group" aria-label="Continuous piano disassembly">
+      <div class="range-shell">
+        <input id="chapterSlider" type="range" min="0" max="7" step="0.001" value="0" aria-label="Piano disassembly progress"/>
+        <nav id="chapters" class="chapter-nav" aria-label="Choose a piano layer">
+        <button type="button" class="active" aria-current="step" data-chapter="0" data-title="From touch to sound." data-description="A small movement becomes room-filling sound. Open the piano to follow the parts that make it possible." aria-label="Chapter 0: Piano"><span class="chapter-label">Piano</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="1" data-title="Inside the piano." data-description="A cut from keyboard to tail reveals the layers within. Each has a different role in the path from touch to sound." aria-label="Chapter 1: Section"><span class="chapter-label">Section</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="2" data-title="A longer lever." data-description="Each key extends deep into the piano. Pressing its front lifts the rear, passing motion to the action." aria-label="Chapter 2: Keys"><span class="chapter-label">Keys</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="3" data-title="Motion becomes a strike." data-description="The action transfers key movement to a felt hammer. In play, the hammer strikes and leaves the string free to vibrate." aria-label="Chapter 3: Action"><span class="chapter-label">Action</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="4" data-title="Tension, held in balance." data-description="Strings vibrate after a hammer strike. The cast-iron plate carries their tension; the bridges pass their vibration to the soundboard." aria-label="Chapter 4: Strings"><span class="chapter-label">Strings</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="5" data-title="Sound into the room." data-description="Wooden bridges carry string vibration into the broad soundboard. Its moving surface couples that vibration to the surrounding air." aria-label="Chapter 5: Soundboard"><span class="chapter-label">Soundboard</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="6" data-title="When a note ends." data-description="Felt dampers stop string vibration as a key is released. The right pedal lifts the dampers, allowing notes to continue ringing." aria-label="Chapter 6: Dampers"><span class="chapter-label">Dampers</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        <button type="button" data-chapter="7" data-title="Every part, in place." data-description="The model returns to the original disassembly photograph’s layout. Drag back to follow the parts into a complete piano." aria-label="Chapter 7: All parts"><span class="chapter-label">All parts</span><span class="chapter-tick" aria-hidden="true"></span></button>
+        </nav>
+      </div>
+      <button type="button" id="play" class="play-button" aria-label="Start the piano disassembly" aria-pressed="false">Explore</button>
+      <button type="button" id="prev" aria-label="Reassemble one layer" disabled="" hidden="">Reassemble one layer</button>
+      <button type="button" id="next" aria-label="Open the next layer" hidden="">Open the next layer</button>
+    </div>
+    <p id="studyNote" class="study-note">Structural study · Not a service procedure</p><span class="footer-index" aria-hidden="true">KIMI / PIANO STUDY</span>
+  </footer>
+  <div id="poster" aria-hidden="true"><img src="assets/poster.webp" alt=""/></div>
+  <div id="loading" class="loading" role="status"><span class="loading-line" aria-hidden="true"></span><span id="loadingText">Opening the piano</span></div>
+  <script type="module" src="assets/reference/sound-path.js"></script>
+
+
+</body></html>

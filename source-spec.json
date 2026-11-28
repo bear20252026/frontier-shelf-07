@@ -1,0 +1,15 @@
+{
+  "volume": "frontier-shelf-07",
+  "entries": 22,
+  "moduleSource": 11,
+  "inlineSource": 5,
+  "compressedBundle": 6,
+  "upstreamSource": [
+    "holtsetio/aurelia"
+  ],
+  "entryExceptions": [
+    "k3-piano-sound-path/sound-path.html",
+    "goodluck-bobing/bobing.html"
+  ],
+  "verified": "22/22 HTTP 200 on 2026-11-25; 22 rendered screenshots"
+}

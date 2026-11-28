@@ -1,0 +1,284 @@
+{
+  "folders": [
+    {
+      "id": "portfolio",
+      "parentId": null,
+      "name": "作品集",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "photos",
+      "parentId": "portfolio",
+      "name": "摄影作品",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "documents",
+      "parentId": "portfolio",
+      "name": "文档资料",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "projects",
+      "parentId": "portfolio",
+      "name": "项目文件",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "archive",
+      "parentId": "portfolio",
+      "name": "归档",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "inspiration",
+      "parentId": null,
+      "name": "灵感收集",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "visual",
+      "parentId": "inspiration",
+      "name": "视觉研究",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "personal",
+      "parentId": null,
+      "name": "个人资料",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    },
+    {
+      "id": "inbox",
+      "parentId": "personal",
+      "name": "收件箱",
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": false,
+      "deletedAt": null,
+      "tags": []
+    }
+  ],
+  "files": [
+    {
+      "source": "mountain-01.jpg",
+      "name": "云海之上.jpg",
+      "folderId": "photos",
+      "tags": [
+        "摄影"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-1",
+      "size": 139832,
+      "createdAt": 1789722000000,
+      "modifiedAt": 1789722000000,
+      "starred": true,
+      "deletedAt": null
+    },
+    {
+      "source": "coast-03.jpg",
+      "name": "潮汐之镜.jpg",
+      "folderId": "photos",
+      "tags": [
+        "摄影"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-2",
+      "size": 125161,
+      "createdAt": 1789718400000,
+      "modifiedAt": 1789718400000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "forest-01.jpg",
+      "name": "雾林微光.jpg",
+      "folderId": "photos",
+      "tags": [
+        "摄影"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-3",
+      "size": 306536,
+      "createdAt": 1789714800000,
+      "modifiedAt": 1789714800000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "desert-01.jpg",
+      "name": "沙丘弧线.jpg",
+      "folderId": "photos",
+      "tags": [
+        "摄影"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-4",
+      "size": 159233,
+      "createdAt": 1789711200000,
+      "modifiedAt": 1789711200000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "mountain-03.jpg",
+      "name": "山间镜湖.jpg",
+      "folderId": "photos",
+      "tags": [
+        "摄影"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-5",
+      "size": 214180,
+      "createdAt": 1789707600000,
+      "modifiedAt": 1789707600000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "coast-09.jpg",
+      "name": "静谧海湾.jpg",
+      "folderId": "photos",
+      "tags": [
+        "摄影"
+      ],
+      "mime": "image/jpeg",
+      "id": "sample-6",
+      "size": 457264,
+      "createdAt": 1789704000000,
+      "modifiedAt": 1789704000000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "cn/welcome.pdf",
+      "name": "欢迎使用云储存.pdf",
+      "folderId": "documents",
+      "tags": [
+        "入门"
+      ],
+      "mime": "application/pdf",
+      "id": "sample-7",
+      "size": 6424032,
+      "createdAt": 1789700400000,
+      "modifiedAt": 1789700400000,
+      "starred": true,
+      "deletedAt": null
+    },
+    {
+      "source": "cn/creative-brief.pdf",
+      "name": "创作简报.pdf",
+      "folderId": "documents",
+      "tags": [
+        "项目"
+      ],
+      "mime": "application/pdf",
+      "id": "sample-8",
+      "size": 6423813,
+      "createdAt": 1789696800000,
+      "modifiedAt": 1789696800000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "cn/field-notes.md",
+      "name": "野外笔记.md",
+      "folderId": "documents",
+      "tags": [
+        "笔记"
+      ],
+      "mime": "text/plain",
+      "id": "sample-9",
+      "size": 171,
+      "createdAt": 1789693200000,
+      "modifiedAt": 1789693200000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "cn/project-plan.csv",
+      "name": "项目计划.csv",
+      "folderId": "projects",
+      "tags": [
+        "项目"
+      ],
+      "mime": "text/csv",
+      "id": "sample-10",
+      "size": 139,
+      "createdAt": 1789689600000,
+      "modifiedAt": 1789689600000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "cn/sample-library.txt",
+      "name": "示例素材库.txt",
+      "folderId": "documents",
+      "tags": [
+        "入门"
+      ],
+      "mime": "text/plain",
+      "id": "sample-11",
+      "size": 245,
+      "createdAt": 1789686000000,
+      "modifiedAt": 1789686000000,
+      "starred": false,
+      "deletedAt": null
+    },
+    {
+      "source": "cn/readme.md",
+      "name": "归档笔记.md",
+      "folderId": "archive",
+      "tags": [
+        "笔记"
+      ],
+      "mime": "text/plain",
+      "id": "sample-12",
+      "size": 74,
+      "createdAt": 1789682400000,
+      "modifiedAt": 1789682400000,
+      "starred": false,
+      "deletedAt": null
+    }
+  ],
+  "activity": [
+    {
+      "id": "welcome",
+      "action": "welcome",
+      "name": "云储存",
+      "at": 1789722000000
+    }
+  ]
+}

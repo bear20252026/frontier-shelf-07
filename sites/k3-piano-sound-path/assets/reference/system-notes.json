@@ -1,0 +1,78 @@
+{
+  "definitions": [
+    {
+      "key": "case",
+      "title": "Case & Lids",
+      "summary": "The rim and supports form the body structure; the lids cover the interior.",
+      "detail": "The inner frame carries the soundboard; opened up, the outer silhouette relates to the inner supports.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/manufacturing/",
+      "sourceTitle": "Yamaha｜Making the Body"
+    },
+    {
+      "key": "keyboard",
+      "title": "Keys & Key Frame",
+      "summary": "Keys transmit finger motion; the key frame supports and positions the keyboard.",
+      "detail": "Pins guide the keys and cloth punches cushion them; paper shims adjust key height and travel.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/manufacturing/manufacturing003.html",
+      "sourceTitle": "Yamaha｜Stringing and Mounting the Keyboard and Action"
+    },
+    {
+      "key": "action",
+      "title": "Action & Hammers",
+      "summary": "Transfers key motion to the hammers so the heads strike the strings.",
+      "detail": "The repetition mechanism readies the next strike before the key fully returns.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/mechanism/mechanism003.html",
+      "sourceTitle": "Yamaha｜What is a Piano’s Action?"
+    },
+    {
+      "key": "damper",
+      "title": "Dampers",
+      "summary": "Felt heads damp vibration while touching the strings, and allow it once lifted.",
+      "detail": "Releasing a key drops the felt back onto the string; the sustain pedal holds it up.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/mechanism/mechanism003.html",
+      "sourceTitle": "Yamaha｜What is a Piano’s Action?"
+    },
+    {
+      "key": "strings",
+      "title": "Strings & Cast-Iron Plate",
+      "summary": "Strings vibrate when struck; the cast-iron plate carries the tension of the full set.",
+      "detail": "Separating the string field from the plate shows how the vibrating parts rely on rigid support.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/manufacturing/manufacturing003.html",
+      "sourceTitle": "Yamaha｜Stringing and Mounting the Keyboard and Action"
+    },
+    {
+      "key": "resonance",
+      "title": "Bridges & Soundboard",
+      "summary": "Bridges pass string vibration to the soundboard, which moves the air to make sound.",
+      "detail": "A struck string alone is quiet; coupled through the bridges to the soundboard, the sound carries fully.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/mechanism/mechanism002.html",
+      "sourceTitle": "Yamaha｜The Sound-Producing Mechanism"
+    },
+    {
+      "key": "pedal",
+      "title": "Pedals & Support",
+      "summary": "Legs support the body; pedals change sustain or timbre through linkages.",
+      "detail": "The right pedal lifts the dampers; the left shifts the action sideways, altering string contact.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/selection/",
+      "sourceTitle": "Yamaha｜Grand or Upright?"
+    },
+    {
+      "key": "hardware",
+      "title": "Fittings & Unconfirmed Items",
+      "summary": "The exact names and mounting positions of these small fittings still need item-by-item verification.",
+      "detail": "The three rows of slim pieces are provisionally called pin-like metal parts; their count alone does not make them tuning pins.",
+      "sourceURL": "https://www.yamaha.com/en/musical_instrument_guide/piano/mechanism/",
+      "sourceTitle": "Yamaha｜Let’s Learn the Names of Parts"
+    }
+  ],
+  "uncertainItems": {
+    "F": {
+      "title": "Pin-like metal parts (unconfirmed)",
+      "summary": "Three rows of slim metal parts in the photograph; no per-item labeling yet proves their role.",
+      "detail": "81 × 3 is a visible arrangement count, not evidence they are tuning pins.",
+      "confidence": "unconfirmed",
+      "sourceURL": "https://yamaha-europe.com/YAMAHA_CFX_Wallpapers_4096.zip",
+      "sourceTitle": "Yamaha CFX official disassembly photograph"
+    }
+  }
+}

@@ -1,0 +1,2090 @@
+{
+  "meta": {
+    "source": "https://mntre.com/documentation/mnt-reform2-diy-manual-r1.pdf",
+    "coordinates": "three.js closed pose, mm",
+    "approximation": "现有接口使用实测开口及插入轴；面板、扬声器、SoM、传感器的缺失终端补充示意接座。线束不模拟电气行为或材料受力。",
+    "revision": "mating-datums-20260914"
+  },
+  "cables": [
+    {
+      "name": "cable_display",
+      "zh": "eDP 显示线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "mb_J24",
+          "point": [
+            98.99996,
+            8.45,
+            -77.34501
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            104.0,
+            5.0,
+            -84.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            91.0,
+            11.0,
+            -95.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            91.0,
+            18.0,
+            -97.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            92.0,
+            20.0,
+            -98.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            98.0,
+            24.0,
+            -110.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            98.0,
+            37.0,
+            -109.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            98.0,
+            41.0,
+            -97.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            89.0,
+            41.0,
+            -95.0
+          ]
+        },
+        {
+          "part": "display_panel",
+          "point": [
+            89.0,
+            41.0,
+            -93.0
+          ]
+        },
+        {
+          "part": "display_panel",
+          "point": [
+            110.0,
+            41.0,
+            -43.0
+          ]
+        },
+        {
+          "part": "display_panel",
+          "point": [
+            75.0,
+            39.25,
+            -42.45
+          ]
+        }
+      ],
+      "width": 5.6,
+      "count": 6,
+      "color": "#4b4b50",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "eDP 显示线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "2×15P → IPEX",
+      "ends": [
+        {
+          "part": "mb_J24",
+          "point": [
+            98.99996,
+            8.45,
+            -77.34501
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            30.5,
+            4.5,
+            4.1
+          ],
+          "style": "header",
+          "receiver": false
+        },
+        {
+          "part": "display_panel",
+          "point": [
+            75.0,
+            39.25,
+            -42.45
+          ],
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            -1
+          ],
+          "size": [
+            12,
+            0.6,
+            0.65
+          ],
+          "style": "fpc",
+          "receiver": true
+        }
+      ],
+      "radius": 0.16,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J24",
+          "point": [
+            98.99996,
+            8.45,
+            -77.34501
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            104,
+            5,
+            -84
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            92,
+            20,
+            -98
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            98,
+            24,
+            -110
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            98,
+            37,
+            -109
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            98,
+            41,
+            -97
+          ]
+        },
+        {
+          "part": "display_panel",
+          "point": [
+            110,
+            41,
+            -43
+          ]
+        },
+        {
+          "part": "display_panel",
+          "point": [
+            75.0,
+            39.25,
+            -42.45
+          ]
+        }
+      ],
+      "spread": 0.25,
+      "clearanceRadius": 0.48,
+      "serviceLoopNote": "固定引导点下移至原生铰链槽后方，为开盖至 180° 留出弯折余量。"
+    },
+    {
+      "name": "cable_speaker_left",
+      "zh": "左扬声器线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "mb_J21",
+          "point": [
+            -119.60004,
+            7.85,
+            -77.17001
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -126.0,
+            4.7,
+            -84.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -106.0,
+            9.0,
+            -89.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -102.0,
+            11.0,
+            -89.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -101.0,
+            19.0,
+            -89.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -100.0,
+            20.0,
+            -90.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -92.0,
+            20.0,
+            -98.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -98.0,
+            24.0,
+            -110.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98.0,
+            37.0,
+            -109.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98.0,
+            41.0,
+            -97.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -89.0,
+            41.0,
+            -95.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -88.0,
+            40.0,
+            -91.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -86.0,
+            40.0,
+            -82.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -85.0,
+            41.0,
+            -80.0
+          ]
+        },
+        {
+          "part": "speaker_-1",
+          "point": [
+            -74.5,
+            41.3,
+            -83.2
+          ]
+        }
+      ],
+      "width": 1.3,
+      "count": 2,
+      "color": "#6a2929",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "左扬声器线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "SPEAKERS → 扬声器",
+      "ends": [
+        {
+          "part": "mb_J21",
+          "point": [
+            -119.60004,
+            7.85,
+            -77.17001
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            3.2,
+            2.3,
+            3.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "speaker_-1",
+          "point": [
+            -74.5,
+            41.3,
+            -83.2
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            1.4,
+            0.8,
+            0.25
+          ],
+          "style": "solder",
+          "receiver": true,
+          "lead": 1.4
+        }
+      ],
+      "radius": 0.19,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J21",
+          "point": [
+            -119.60004,
+            7.85,
+            -77.17001
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -126,
+            4.7,
+            -84
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -92,
+            20,
+            -98
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -98,
+            24,
+            -110
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98,
+            37,
+            -109
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98,
+            41,
+            -97
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -85,
+            41,
+            -80
+          ]
+        },
+        {
+          "part": "speaker_-1",
+          "point": [
+            -74.5,
+            41.3,
+            -83.2
+          ]
+        }
+      ],
+      "lead": 0.1,
+      "serviceLoopNote": "固定引导点下移至原生铰链槽后方，为开盖至 180° 留出弯折余量。"
+    },
+    {
+      "name": "cable_speaker_right",
+      "zh": "右扬声器线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "mb_J21",
+          "point": [
+            -116.60004,
+            7.85,
+            -77.17001
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -126.0,
+            4.7,
+            -84.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -106.0,
+            9.0,
+            -89.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -102.0,
+            11.0,
+            -89.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -101.0,
+            19.0,
+            -89.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -100.0,
+            20.0,
+            -90.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -92.0,
+            20.0,
+            -98.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -98.0,
+            24.0,
+            -110.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98.0,
+            37.0,
+            -109.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98.0,
+            41.0,
+            -97.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -89.0,
+            41.0,
+            -95.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -88.0,
+            40.0,
+            -91.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -86.0,
+            40.0,
+            -82.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -85.0,
+            41.0,
+            -80.0
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            60.0,
+            41.0,
+            -80.0
+          ]
+        },
+        {
+          "part": "speaker_1",
+          "point": [
+            74.5,
+            41.3,
+            -83.2
+          ]
+        }
+      ],
+      "width": 1.3,
+      "count": 2,
+      "color": "#6a2929",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "右扬声器线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "SPEAKERS → 扬声器",
+      "ends": [
+        {
+          "part": "mb_J21",
+          "point": [
+            -116.60004,
+            7.85,
+            -77.17001
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            3.2,
+            2.3,
+            3.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "speaker_1",
+          "point": [
+            74.5,
+            41.3,
+            -83.2
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            1.4,
+            0.8,
+            0.25
+          ],
+          "style": "solder",
+          "receiver": true,
+          "lead": 1.4
+        }
+      ],
+      "radius": 0.19,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J21",
+          "point": [
+            -116.60004,
+            7.85,
+            -77.17001
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -126,
+            4.7,
+            -84
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -92,
+            20,
+            -98
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -98,
+            24,
+            -110
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98,
+            37,
+            -109
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -98,
+            41,
+            -97
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            -85,
+            41,
+            -80
+          ]
+        },
+        {
+          "part": "screen_back",
+          "point": [
+            60,
+            41,
+            -80
+          ]
+        },
+        {
+          "part": "speaker_1",
+          "point": [
+            74.5,
+            41.3,
+            -83.2
+          ]
+        }
+      ],
+      "lead": 0.1,
+      "serviceLoopNote": "固定引导点下移至原生铰链槽后方，为开盖至 180° 留出弯折余量。"
+    },
+    {
+      "name": "cable_keyboard_usb",
+      "zh": "键盘 USB 线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "mb_J9",
+          "point": [
+            111.69996,
+            7.85,
+            10.12999
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            119.0,
+            4.6,
+            -30.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            121.0,
+            4.6,
+            -80.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            92.0,
+            10.0,
+            -93.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            90.0,
+            12.0,
+            -95.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            91.0,
+            18.0,
+            -97.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            95.0,
+            19.0,
+            -98.0
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            75.25,
+            20.3,
+            -96.0
+          ]
+        },
+        {
+          "part": "kbd_J1",
+          "point": [
+            75.24957,
+            20.29852,
+            -91.63501
+          ]
+        }
+      ],
+      "width": 3,
+      "count": 4,
+      "color": "#454c56",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "键盘 USB 线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "UI1 / J9 → USB / J1",
+      "ends": [
+        {
+          "part": "mb_J9",
+          "point": [
+            111.69996,
+            7.85,
+            10.12999
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            7,
+            2.5,
+            3.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "kbd_J1",
+          "point": [
+            75.24957,
+            20.29852,
+            -91.63501
+          ],
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            4.2,
+            1.25,
+            2.5
+          ],
+          "style": "housing",
+          "receiver": false
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J9",
+          "point": [
+            111.69996,
+            7.85,
+            10.12999
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            119,
+            4.6,
+            -30
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            121,
+            4.6,
+            -80
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            95,
+            17,
+            -98
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            75.25,
+            20.3,
+            -96
+          ]
+        },
+        {
+          "part": "kbd_J1",
+          "point": [
+            75.24957,
+            20.29852,
+            -91.63501
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_keyboard_sysctl",
+      "zh": "键盘 UART / SYSCTL 线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "mb_J23",
+          "point": [
+            -60.50004,
+            7.85,
+            -44.72001
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -72.0,
+            4.0,
+            -55.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -75.0,
+            4.0,
+            -84.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -73.0,
+            11.0,
+            -93.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -70.0,
+            19.8,
+            -98.0
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -56.0,
+            20.0,
+            -94.0
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            69.0,
+            23.0,
+            -94.0
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            83.15,
+            20.3,
+            -97.5
+          ]
+        },
+        {
+          "part": "kbd_J2",
+          "point": [
+            83.14956,
+            20.29852,
+            -91.63501
+          ]
+        }
+      ],
+      "width": 3,
+      "count": 4,
+      "color": "#454c56",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "键盘 UART / SYSCTL 线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "SYSCTL / J23 → UART / J2",
+      "ends": [
+        {
+          "part": "mb_J23",
+          "point": [
+            -60.50004,
+            7.85,
+            -44.72001
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            7,
+            2.5,
+            3.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "kbd_J2",
+          "point": [
+            83.14956,
+            20.29852,
+            -91.63501
+          ],
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            4.2,
+            1.25,
+            2.5
+          ],
+          "style": "housing",
+          "receiver": false
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J23",
+          "point": [
+            -60.50004,
+            7.85,
+            -44.72001
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -72,
+            4,
+            -55
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -75,
+            4,
+            -84
+          ]
+        },
+        {
+          "part": "case_mainbox",
+          "point": [
+            -70,
+            19.8,
+            -98
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            83.15,
+            20.3,
+            -97.5
+          ]
+        },
+        {
+          "part": "kbd_J2",
+          "point": [
+            83.14956,
+            20.29852,
+            -91.63501
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_trackball_usb",
+      "zh": "轨迹球 USB 线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "mb_J14",
+          "point": [
+            99.59996,
+            7.85,
+            10.12999
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            90.0,
+            4.7,
+            18.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            49.0,
+            6.0,
+            26.0
+          ]
+        },
+        {
+          "part": "trackball_board",
+          "point": [
+            44.0,
+            8.0,
+            28.0
+          ]
+        },
+        {
+          "part": "tb_J1",
+          "point": [
+            40.04976,
+            13.40852,
+            41.88299
+          ]
+        }
+      ],
+      "width": 3,
+      "count": 4,
+      "color": "#454c56",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "轨迹球 USB 线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "UI2 / J14 → 轨迹球 J1",
+      "ends": [
+        {
+          "part": "mb_J14",
+          "point": [
+            99.59996,
+            7.85,
+            10.12999
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            7,
+            2.5,
+            3.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "tb_J1",
+          "point": [
+            40.04976,
+            13.40852,
+            41.88299
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            1,
+            0,
+            0
+          ],
+          "size": [
+            7,
+            2.5,
+            3.7
+          ],
+          "style": "housing",
+          "receiver": false
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J14",
+          "point": [
+            99.59996,
+            7.85,
+            10.12999
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            90,
+            4.7,
+            18
+          ]
+        },
+        {
+          "part": "trackball_board",
+          "point": [
+            44,
+            8,
+            28
+          ]
+        },
+        {
+          "part": "tb_J1",
+          "point": [
+            40.04976,
+            13.40852,
+            41.88299
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_oled",
+      "zh": "OLED 4 芯排线",
+      "kind": "ribbon",
+      "route": [
+        {
+          "part": "kbd_J3",
+          "point": [
+            50.04956,
+            19.72352,
+            -88.76501
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            44.0,
+            20.2,
+            -88.765
+          ]
+        },
+        {
+          "part": "oled_board",
+          "point": [
+            40.0,
+            23.9,
+            -91.1975
+          ]
+        },
+        {
+          "part": "oled_J1",
+          "point": [
+            33.4555,
+            24.3,
+            -91.1975
+          ]
+        }
+      ],
+      "width": 3.2,
+      "count": 4,
+      "color": "#e4dcc5",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "OLED 4 芯排线；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "键盘 AUX / J3 → OLED FPC",
+      "ends": [
+        {
+          "part": "kbd_J3",
+          "point": [
+            50.04956,
+            19.72352,
+            -88.76501
+          ],
+          "direction": [
+            -1,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            3.2,
+            0.18,
+            2
+          ],
+          "style": "fpc",
+          "receiver": false
+        },
+        {
+          "part": "oled_J1",
+          "point": [
+            33.4555,
+            24.3,
+            -91.1975
+          ],
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            -1,
+            0
+          ],
+          "size": [
+            3.2,
+            0.18,
+            2
+          ],
+          "style": "fpc",
+          "receiver": false
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "kbd_J3",
+          "point": [
+            50.04956,
+            19.72352,
+            -88.76501
+          ]
+        },
+        {
+          "part": "kbd_board",
+          "point": [
+            44,
+            20.2,
+            -88.765
+          ]
+        },
+        {
+          "part": "oled_board",
+          "point": [
+            40,
+            23.9,
+            -91.1975
+          ]
+        },
+        {
+          "part": "oled_J1",
+          "point": [
+            33.4555,
+            24.3,
+            -91.1975
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_battery_left",
+      "zh": "左电池 5 芯线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "bat_J1",
+          "point": [
+            -133.21934,
+            25.51,
+            57.32149
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -138.0,
+            20.0,
+            54.0
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -132.0,
+            15.0,
+            36.0
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -132.0,
+            14.0,
+            34.0
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -133.0,
+            13.0,
+            33.0
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -137.0,
+            12.0,
+            28.0
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -129.0,
+            12.0,
+            24.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -85.0,
+            10.5,
+            19.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -36.5,
+            11.57,
+            18.0
+          ]
+        },
+        {
+          "part": "mb_J13",
+          "point": [
+            -36.50004,
+            11.57,
+            10.58499
+          ]
+        }
+      ],
+      "width": 3.5,
+      "count": 5,
+      "color": "#a89f84",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "左电池 5 芯线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "Pico-Lock 5P：电池组 → 主板",
+      "ends": [
+        {
+          "part": "bat_J1",
+          "point": [
+            -133.21934,
+            25.51,
+            57.32149
+          ],
+          "direction": [
+            -1,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            8.1,
+            1.1,
+            2.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "mb_J13",
+          "point": [
+            -36.50004,
+            11.57,
+            10.58499
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            8.1,
+            1.1,
+            2.7
+          ],
+          "style": "housing",
+          "receiver": false
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "bat_J1",
+          "point": [
+            -133.21934,
+            25.51,
+            57.32149
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -138,
+            20,
+            54
+          ]
+        },
+        {
+          "part": "battery_board",
+          "point": [
+            -137,
+            12,
+            28
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -85,
+            10.5,
+            19
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -36.5,
+            11.57,
+            18
+          ]
+        },
+        {
+          "part": "mb_J13",
+          "point": [
+            -36.50004,
+            11.57,
+            10.58499
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_battery_right",
+      "zh": "右电池 5 芯线束",
+      "kind": "bundle",
+      "route": [
+        {
+          "part": "bat2_J1",
+          "point": [
+            40.35936,
+            25.51,
+            57.32149
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            38.0,
+            26.0,
+            57.0
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            36.0,
+            23.0,
+            56.0
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            34.0,
+            21.0,
+            55.0
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            26.0,
+            21.0,
+            47.0
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            25.0,
+            18.0,
+            46.0
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            25.0,
+            14.0,
+            43.0
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            29.0,
+            8.0,
+            26.0
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -22.8,
+            11.57,
+            18.0
+          ]
+        },
+        {
+          "part": "mb_J2",
+          "point": [
+            -22.80004,
+            11.57,
+            10.58499
+          ]
+        }
+      ],
+      "width": 3.5,
+      "count": 5,
+      "color": "#a89f84",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "右电池 5 芯线束；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "Pico-Lock 5P：电池组 → 主板",
+      "ends": [
+        {
+          "part": "bat2_J1",
+          "point": [
+            40.35936,
+            25.51,
+            57.32149
+          ],
+          "direction": [
+            -1,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            8.1,
+            1.1,
+            2.7
+          ],
+          "style": "housing",
+          "receiver": false
+        },
+        {
+          "part": "mb_J2",
+          "point": [
+            -22.80004,
+            11.57,
+            10.58499
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            8.1,
+            1.1,
+            2.7
+          ],
+          "style": "housing",
+          "receiver": false
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "bat2_J1",
+          "point": [
+            40.35936,
+            25.51,
+            57.32149
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            34,
+            20,
+            55
+          ]
+        },
+        {
+          "part": "battery2_board",
+          "point": [
+            29,
+            8,
+            26
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -22.8,
+            11.57,
+            18
+          ]
+        },
+        {
+          "part": "mb_J2",
+          "point": [
+            -22.80004,
+            11.57,
+            10.58499
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_mipi",
+      "zh": "SoM MIPI-DSI 排线",
+      "kind": "ribbon",
+      "route": [
+        {
+          "part": "mb_J15",
+          "point": [
+            -35.95004,
+            11.225,
+            -56.64501
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -33.65,
+            10.8,
+            -56.645
+          ]
+        },
+        {
+          "part": "mb_U1_2",
+          "point": [
+            -31.45704,
+            10.77046,
+            -56.64501
+          ]
+        }
+      ],
+      "width": 16.5,
+      "count": 33,
+      "color": "#dfb477",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "SoM MIPI-DSI 排线；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "主板 J15 → SoM MIPI；SoM 端接口位置示意",
+      "ends": [
+        {
+          "part": "mb_J15",
+          "point": [
+            -35.95004,
+            11.225,
+            -56.64501
+          ],
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            16.5,
+            0.18,
+            1
+          ],
+          "style": "fpc",
+          "receiver": false
+        },
+        {
+          "part": "mb_U1_2",
+          "point": [
+            -31.45704,
+            10.77046,
+            -56.64501
+          ],
+          "direction": [
+            -1,
+            0,
+            0
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            16.5,
+            0.18,
+            0.7
+          ],
+          "style": "fpc",
+          "receiver": true
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "mb_J15",
+          "point": [
+            -35.95004,
+            11.225,
+            -56.64501
+          ]
+        },
+        {
+          "part": "mb_board",
+          "point": [
+            -33.65,
+            10.8,
+            -56.645
+          ]
+        },
+        {
+          "part": "mb_U1_2",
+          "point": [
+            -31.45704,
+            10.77046,
+            -56.64501
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cable_sensor",
+      "zh": "轨迹球传感器 6 芯排线",
+      "kind": "ribbon",
+      "route": [
+        {
+          "part": "tb_J2",
+          "point": [
+            -0.08274,
+            16.57331,
+            85.84194
+          ]
+        },
+        {
+          "part": "trackball_board",
+          "point": [
+            0.0,
+            16.55,
+            92.0
+          ]
+        },
+        {
+          "part": "trackball_board",
+          "point": [
+            0.0,
+            8.0,
+            93.0
+          ]
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            0.0,
+            5.8,
+            68.0
+          ]
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            0.0,
+            5.8,
+            47.0
+          ]
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            -0.00024,
+            7.01852,
+            46.73299
+          ]
+        }
+      ],
+      "width": 3.5,
+      "count": 6,
+      "color": "#d5b776",
+      "source": "assets/reform-src/ASSEMBLY.md; DIY manual R-1",
+      "desc": "轨迹球传感器 6 芯排线；插头按接口插入轴定位，弯曲段经过机身通道。",
+      "connector": "轨迹球 J2 → 球底传感器；传感器端位置示意",
+      "ends": [
+        {
+          "part": "tb_J2",
+          "point": [
+            -0.08274,
+            16.57331,
+            85.84194
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ],
+          "size": [
+            3.5,
+            0.18,
+            1.6
+          ],
+          "style": "fpc",
+          "receiver": false
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            -0.00024,
+            7.01852,
+            46.73299
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ],
+          "size": [
+            3.5,
+            0.18,
+            0.7
+          ],
+          "style": "fpc",
+          "receiver": true
+        }
+      ],
+      "radius": 0.23,
+      "cornerRadius": 0.65,
+      "originalRoute": [
+        {
+          "part": "tb_J2",
+          "point": [
+            -0.08274,
+            16.57331,
+            85.84194
+          ]
+        },
+        {
+          "part": "trackball_board",
+          "point": [
+            0,
+            16.55,
+            92
+          ]
+        },
+        {
+          "part": "trackball_board",
+          "point": [
+            0,
+            8,
+            93
+          ]
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            0,
+            5.8,
+            68
+          ]
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            0,
+            5.8,
+            47
+          ]
+        },
+        {
+          "part": "trackball_cup",
+          "point": [
+            -0.00024,
+            7.01852,
+            46.73299
+          ]
+        }
+      ]
+    }
+  ]
+}

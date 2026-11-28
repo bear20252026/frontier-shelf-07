@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" href="data:,"/>
+<title>Fish&amp;me</title>
+<style>
+  @font-face {
+    font-family: 'Pinyon Script';
+    src: url('./vendor/fonts/pinyon-script.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Caveat';
+    src: url('./vendor/fonts/caveat.woff2') format('woff2');
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0810; cursor: none; }
+  #app { width: 100%; height: 100%; }
+  canvas { display: block; }
+
+  #cursorGlow {
+    position: fixed; left: 0; top: 0; z-index: 50;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.55),
+                0 0 22px 7px rgba(255, 255, 255, 0.24),
+                inset 0 0 5px rgba(255, 255, 255, 0.35);
+    pointer-events: none; opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.15s;
+  }
+  #cursorGlow.moving {
+    animation: cursorBreath 1.35s ease-in-out infinite;
+  }
+  @keyframes cursorBreath {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.50),
+                  0 0 20px 6px rgba(255, 255, 255, 0.20),
+                  inset 0 0 5px rgba(255, 255, 255, 0.30);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.18);
+      box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.70),
+                  0 0 30px 10px rgba(255, 255, 255, 0.32),
+                  inset 0 0 6px rgba(255, 255, 255, 0.40);
+    }
+  }
+  #cursorGlow::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    width: 3px; height: 3px; border-radius: 50%;
+    background: #ffffff; box-shadow: 0 0 6px #ffffff;
+    transform: translate(-50%, -50%);
+  }
+  @media (pointer: coarse) {
+    html, body { cursor: auto; }
+    #cursorGlow { display: none; }
+  }
+
+  #brand {
+    position: fixed; top: 20px; left: 26px; z-index: 10;
+    width: 55px; pointer-events: none;
+    transform: rotate(-3deg);
+    filter: drop-shadow(0 0 10px rgba(60, 120, 255, 0.55)) drop-shadow(0 0 30px rgba(50, 100, 255, 0.3));
+  }
+
+  #loading {
+    position: fixed; inset: 0; z-index: 20;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #1a1e2e 0%, #12101a 60%, #0a0810 100%);
+    color: #f2fbfd; font-family: -apple-system, "PingFang SC", sans-serif;
+    transition: opacity 0.8s;
+  }
+  #loading .title { width: 260px; margin-bottom: 18px; transform: rotate(-3deg);
+    filter: drop-shadow(0 0 12px rgba(60, 120, 255, 0.5)); }
+  #loading .bar { width: 220px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.25); overflow: hidden; }
+  #loading .bar i { display: block; height: 100%; width: 0%; background: #fff; border-radius: 2px; transition: width 0.2s; }
+  #loading .pct { margin-top: 10px; font-size: 12px; opacity: 0.85; }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/addons/"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="cursorGlow"></div>
+  <img id="brand" src="./title_fishandme.png" alt="FISH AND ME"/>
+  <video id="bgvid" src="./bg_loop.mp4" autoplay="" muted="" loop="" playsinline="" style="display:none"></video>
+  <div id="loading">
+    <img class="title" src="./title_fishandme.png" alt="FISH AND ME"/>
+    <div class="bar"><i id="loadBar"></i></div>
+    </div>
+  <script type="module" src="./main.js?v=54"></script>
+
+
+</body></html>

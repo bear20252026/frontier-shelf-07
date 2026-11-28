@@ -1,0 +1,5 @@
+Sample library
+
+Six landscape images and six documents are included for exploring file organization.
+You can rename, move, tag, download or delete these items.
+Demo edits are temporary; your personal cloud requires sign-in and persistent storage.

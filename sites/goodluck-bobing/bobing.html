@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<link rel="icon" href="data:,"/>
+<title>Goodluck</title>
+<style>
+  :root { color-scheme: dark;
+          --porcelain: #f4f1ea; --cinnabar: #b0231f; --gold: #c9b489; --ink: #efe9dc; }
+  @font-face { font-family: 'BingSerif'; font-weight: 600; font-display: swap;
+               src: url('./assets/fonts/NotoSerifSC-600.woff2') format('woff2'); }
+  @font-face { font-family: 'BingSerif'; font-weight: 700; font-display: swap;
+               src: url('./assets/fonts/NotoSerifSC-700.woff2') format('woff2'); }
+  @font-face { font-family: 'EngSerif'; font-weight: 500; font-display: swap;
+               src: url('./assets/fonts/CormorantGaramond-500.woff2') format('woff2'); }
+  @font-face { font-family: 'EngSerif'; font-weight: 600; font-display: swap;
+               src: url('./assets/fonts/CormorantGaramond-600.woff2') format('woff2'); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #14080a; overscroll-behavior: none; }
+  body { font-family: 'EngSerif', 'BingSerif', 'Songti SC', 'Noto Serif SC', ui-serif, serif; color: var(--ink);
+         -webkit-user-select: none; user-select: none; }
+  .en { font-family: 'EngSerif', 'BingSerif', serif; }
+  #app { position: fixed; inset: 0; touch-action: none; }
+  canvas { display: block; }
+  .vignette { position: fixed; inset: 0; z-index: 5; pointer-events: none;
+              background: radial-gradient(ellipse 90% 80% at 50% 42%, transparent 55%, rgba(8, 3, 4, 0.42) 100%); }
+  .hud { position: fixed; z-index: 10; }
+
+  @keyframes prizeIn { 0% { transform: scale(0.6); opacity: 0; letter-spacing: 0.5em; }
+                       100% { transform: scale(1); opacity: 1; } }
+
+  /* ============ bottom dock: pip cards ============ */
+  .dock {
+    left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 13px;
+  }
+  #vals { display: flex; gap: 10px; min-height: 38px; align-items: center; justify-content: center; }
+  .df {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(150deg, #fbf8f1, #e9e3d6);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); padding: 6px;
+    animation: dieIn .32s ease both;
+  }
+  .df i { width: 76%; aspect-ratio: 1; border-radius: 50%; place-self: center; }
+  .df i.on { background: #33302a; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.55); }
+  .df.red i.on { background: var(--cinnabar); }
+  .df.lean { outline: 1px solid rgba(201, 180, 137, 0.9); }
+  @keyframes dieIn { 0% { transform: translateY(8px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+  #vals .rolling { font-size: 11px; letter-spacing: 0.35em; color: rgba(233, 220, 195, 0.5); }
+
+  /* ============ loading screen: real 3D die spinning ============ */
+  #loading { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column;
+             align-items: center; justify-content: center; gap: 26px;
+             background: radial-gradient(ellipse 90% 75% at 50% 44%, #221114 0%, #14080a 62%, #090304 100%);
+             transition: opacity .6s ease; }
+  #loading.done { opacity: 0; pointer-events: none; }
+  #loader-stage { width: min(34vw, 150px); aspect-ratio: 1; }
+  #loader-gl { width: 100%; height: 100%; display: block; }
+  .loader-caption { letter-spacing: .34em; text-indent: .34em; color: rgba(233, 214, 189, .72);
+                    font-size: 12px; white-space: nowrap; text-shadow: 0 1px 6px rgba(0,0,0,.65);
+                    animation: captionPulse 1.6s ease-in-out infinite; }
+  @keyframes captionPulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+
+  /* ============ 结果纸条（仿真纸，居中展开，点旁边关闭） ============ */
+  #slip-overlay { position: fixed; inset: 0; z-index: 12; display: grid; place-items: center;
+    background: rgba(10, 4, 5, .48); backdrop-filter: blur(2.5px);
+    opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+  #slip-overlay.show { opacity: 1; pointer-events: auto; }
+  #slip-paper {
+    writing-mode: vertical-rl; display: flex; align-items: center; gap: 18px;
+    padding: 36px 24px 32px;
+    background:
+      radial-gradient(ellipse 120% 90% at 28% 18%, rgba(255, 252, 240, .55), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 76% 86%, rgba(190, 160, 110, .16), transparent 55%),
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0.5 0 0 0 0 0.42 0 0 0 0 0.28 0 0 0 0.055 0"/></filter><rect width="160" height="160" filter="url(%23n)"/></svg>'),
+      linear-gradient(158deg, #f8f1de 0%, #f2e8ce 48%, #eadcba 100%);
+    border-radius: 3px 5px 4px 6px / 5px 3px 6px 4px;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, .22),
+      0 8px 18px rgba(0, 0, 0, .35),
+      0 28px 64px rgba(0, 0, 0, .52),
+      inset 0 0 30px rgba(160, 120, 70, .12);
+    transform: scale(.62) rotate(-3.2deg); opacity: 0;
+    transition: transform .5s cubic-bezier(.18, .9, .26, 1.04), opacity .38s ease;
+  }
+  #slip-overlay.show #slip-paper { transform: scale(1) rotate(-1.3deg); opacity: 1; }
+  .slip-title { font-size: 34px; font-weight: 700; letter-spacing: .22em; color: #3d2413;
+                text-shadow: 0 1px 0 rgba(255, 250, 235, .7); }
+  .slip-pinyin { font-family: 'EngSerif', serif; font-size: 11.5px; letter-spacing: .15em;
+                 color: rgba(96, 66, 38, .62); }
+  .slip-level { font-family: 'EngSerif', serif; font-size: 10px; letter-spacing: .22em;
+                color: rgba(150, 46, 38, .78); }
+
+  /* ============ ambience toggle ============ */
+  #amb-toggle { position: fixed; top: max(14px, env(safe-area-inset-top)); right: 16px; z-index: 15;
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(201, 180, 137, 0.45);
+    background: rgba(20, 8, 10, 0.5); color: rgba(233, 220, 195, 0.85); font-family: inherit;
+    font-size: 15px; line-height: 32px; text-align: center; cursor: pointer; backdrop-filter: blur(4px);
+    -webkit-tap-highlight-color: transparent; }
+  #amb-toggle.muted { color: rgba(233, 220, 195, 0.35); border-color: rgba(201, 180, 137, 0.2); }
+  #credit { position: fixed; left: 10px; bottom: max(8px, env(safe-area-inset-bottom)); z-index: 10;
+    font-size: 9px; letter-spacing: .05em; color: rgba(233, 220, 195, 0.28); pointer-events: none;
+    font-family: ui-sans-serif, sans-serif; }
+
+  /* ============ mobile ============ */
+  @media (max-width: 700px), (pointer: coarse) {
+    .df { width: 32px; height: 32px; border-radius: 7px; padding: 5px; }
+    #loader-stage { width: 30vw; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="vignette"></div>
+
+<div class="hud dock">
+  <div id="vals"></div>
+</div>
+
+<button id="amb-toggle" class="muted" title="Ambience">♪</button>
+<audio id="amb" loop="" preload="auto" src="./assets/night_ambience.mp3"></audio>
+
+<div id="slip-overlay">
+  <div id="slip-paper">
+    <div class="slip-title" id="slip-title">状元</div>
+    <div class="slip-pinyin" id="slip-pinyin">Zhuàngyuán</div>
+    <div class="slip-level" id="slip-level">Lv. 3</div>
+  </div>
+</div>
+
+<div id="loading">
+  <div id="loader-stage"><canvas id="loader-gl"></canvas></div>
+  <div class="loader-caption">PREPARING</div>
+</div>
+
+<script>
+  (function () {
+    var amb = document.getElementById('amb');
+    var btn = document.getElementById('amb-toggle');
+    amb.volume = 0.5;
+    var want = true;
+    window.__ambMuted = false;   // bobing.js SFX reads this too
+    function tryPlay() {
+      if (!want) return;
+      amb.play().then(function () { btn.classList.remove('muted'); }).catch(function () {});
+    }
+    // autoplay policy: start on first user interaction
+    ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) {
+      window.addEventListener(ev, function h() { tryPlay(); }, { passive: true });
+    });
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      want = !want;
+      window.__ambMuted = !want;
+      if (want) { tryPlay(); btn.classList.remove('muted'); }
+      else { amb.pause(); btn.classList.add('muted'); }
+    });
+  })();
+</script>
+
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js" } }
+</script>
+
+<script type="module">
+  // Loading screen: the real die model spinning in a tiny WebGL view.
+  import * as THREE from 'three';
+  import { GLTFLoader } from './vendor/loaders/GLTFLoader.js';
+
+  const loadingEl = document.getElementById('loading');
+  const canvas = document.getElementById('loader-gl');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 10);
+  camera.position.set(0, 0.055, 0.16);
+  camera.lookAt(0, 0, 0);
+
+  // tiny procedural room -> PMREM env, so the brushed metal has reflections
+  {
+    const room = new THREE.Scene();
+    const mk = (color, x, y, z, w, h) => {
+      const m = new THREE.Mesh(
+        new THREE.PlaneGeometry(w, h),
+        new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }));
+      m.position.set(x, y, z);
+      m.lookAt(0, 0, 0);
+      room.add(m);
+    };
+    room.background = new THREE.Color(0x20100c);
+    mk(0xfff2dd, 0, 2.5, 0, 3, 3);        // warm ceiling card
+    mk(0xffc98a, -2.5, 0.5, -1.5, 2, 2);  // candle side
+    mk(0x8fb2e8, 2.5, 1.0, 1.5, 2, 2);    // cool counter card
+    mk(0xb0231f, 0, -1.5, -2.5, 3, 2);    // red back
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(room, 0.04).texture;
+  }
+  scene.add(new THREE.AmbientLight(0xffe6c8, 0.7));
+  const key = new THREE.DirectionalLight(0xfff0dc, 2.2);
+  key.position.set(1.5, 2.5, 1.5);
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0x9db8ff, 0.8);
+  rim.position.set(-2, 1, -1.5);
+  scene.add(rim);
+
+  const dieGroup = new THREE.Group();
+  scene.add(dieGroup);
+
+  new GLTFLoader().load('./assets/die.glb', (gltf) => {
+    const root = gltf.scene;
+    const col = root.getObjectByName('Collider');
+    if (col) col.removeFromParent();
+    const box = new THREE.Box3().setFromObject(root);
+    const c = box.getCenter(new THREE.Vector3());
+    root.position.sub(c);
+    const size = box.getSize(new THREE.Vector3()).length();
+    camera.position.set(0, size * 0.5, size * 1.85);   // frame the die to fill the stage
+    camera.lookAt(0, 0, 0);
+    dieGroup.add(root);
+  });
+
+  let dead = false;
+  function frame(t) {
+    if (dead || loadingEl.classList.contains('done')) { dead = true; renderer.dispose(); return; }
+    requestAnimationFrame(frame);
+    dieGroup.rotation.y = t * 0.0016;
+    dieGroup.rotation.x = -0.42 + Math.sin(t * 0.0011) * 0.18;
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(frame);
+</script>
+
+<script type="module" src="./src/bobing.js?v=20260901f"></script>
+
+
+</body></html>

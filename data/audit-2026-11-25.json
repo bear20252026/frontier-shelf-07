@@ -1,0 +1,409 @@
+{
+  "date": "2026-11-25",
+  "viewport": "1280x800",
+  "browser": "Chromium + Playwright (headless)",
+  "entries": 22,
+  "http_200": 22,
+  "screenshots": 22,
+  "sites": [
+    {
+      "slug": "inmotion",
+      "title": "IN MOTION",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 536,
+          "clientW": 0,
+          "clientH": 0
+        }
+      ],
+      "body_chars": 191,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "light-color-dance",
+      "title": "光色之舞",
+      "status": 200,
+      "canvas": 2,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        },
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "field-buffer",
+      "title": "FIELD",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 1
+    },
+    {
+      "slug": "tiffany-lamp",
+      "title": "蒂凡尼",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 88,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "sunset-collector",
+      "title": "日落收藏家",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 112,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "cz5",
+      "title": "长征五号",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 239,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "moonshot-concept-r",
+      "title": "MOONSHOT",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "jellyfish",
+      "title": "Aurelia",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 0,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "ev7-helmet",
+      "title": "EV-7",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "open-sea-webgpu",
+      "title": "Open Sea",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 208,
+      "notfound": 0,
+      "console_errors": 1
+    },
+    {
+      "slug": "cloud-storage",
+      "title": "云储存",
+      "status": 200,
+      "canvas": 0,
+      "canvases": [],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "limonaia",
+      "title": "Limonaia",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 148,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "r4360",
+      "title": "R-4360",
+      "status": 200,
+      "canvas": 3,
+      "canvases": [
+        {
+          "w": 200,
+          "h": 60,
+          "clientW": 200,
+          "clientH": 60
+        },
+        {
+          "w": 294,
+          "h": 167,
+          "clientW": 294,
+          "clientH": 167
+        },
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "open-heart",
+      "title": "Open Heart",
+      "status": 200,
+      "canvas": 2,
+      "canvases": [
+        {
+          "w": 912,
+          "h": 570,
+          "clientW": 1280,
+          "clientH": 800
+        },
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 146,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "k3-microscope",
+      "title": "K3",
+      "status": 200,
+      "canvas": 2,
+      "canvases": [
+        {
+          "w": 720,
+          "h": 720,
+          "clientW": 0,
+          "clientH": 0
+        },
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "k3-piano-sound-path",
+      "title": "From Touch to Sound",
+      "status": 200,
+      "canvas": 0,
+      "canvases": [],
+      "body_chars": 175,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "goodluck-bobing",
+      "title": "Goodluck",
+      "status": 200,
+      "canvas": 2,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        },
+        {
+          "w": 300,
+          "h": 150,
+          "clientW": 150,
+          "clientH": 150
+        }
+      ],
+      "body_chars": 69,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "timber-tower",
+      "title": "TIMBER TOWER",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "aeolis-01",
+      "title": "AEOLIS",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 167,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "mnt-reform",
+      "title": "MNT Reform",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 976,
+          "h": 579,
+          "clientW": 976,
+          "clientH": 579
+        }
+      ],
+      "body_chars": 240,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "gringotts-lighting",
+      "title": "古灵阁",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 120,
+      "notfound": 0,
+      "console_errors": 0
+    },
+    {
+      "slug": "fish-and-me",
+      "title": "Fish&me",
+      "status": 200,
+      "canvas": 1,
+      "canvases": [
+        {
+          "w": 1280,
+          "h": 800,
+          "clientW": 1280,
+          "clientH": 800
+        }
+      ],
+      "body_chars": 0,
+      "notfound": 0,
+      "console_errors": 0
+    }
+  ],
+  "notes": [
+    "In Motion favicon added after the first run; targeted rerun confirms 0 console errors and 0 404s."
+  ]
+}

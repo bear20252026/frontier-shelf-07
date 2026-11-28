@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>长征五号 · CZ-5 | 中国航天</title>
+<style>
+  :root {
+    --ink: #dfe6f0; --dim: #8fa0b8; --accent: #3b82c4; --warm: #ff7a3c;
+    --glass: rgba(8, 14, 26, 0.55);
+  }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0a1424; }
+  canvas { display: block; }
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; color: var(--dim);
+             font: 13px/1.8 system-ui, "PingFang SC", sans-serif; background: #0a1424;
+             letter-spacing: 0.35em; z-index: 40; }
+
+  /* ---------- 顶部极简导航 ---------- */
+  #topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 clamp(16px, 4vw, 44px); height: 60px;
+            background: linear-gradient(to bottom, rgba(8,14,26,0.78), rgba(8,14,26,0));
+            color: var(--ink); user-select: none; }
+  /* 注意：不要在全屏 WebGL 上叠 backdrop-filter——Safari 合成 bug 会致交互闪烁/白屏 */
+  #brand { display: flex; align-items: baseline; gap: 12px; pointer-events: none; }
+  #brand .cn { font: 600 17px/1 system-ui, "PingFang SC", sans-serif; letter-spacing: 0.42em; }
+  #brand .en { font: 500 11px/1 system-ui, sans-serif; letter-spacing: 0.30em; color: var(--dim); }
+  nav { display: flex; gap: clamp(14px, 3vw, 34px); }
+  nav a { cursor: pointer; color: var(--dim); text-decoration: none;
+          font: 500 13px/1 system-ui, "PingFang SC", sans-serif; letter-spacing: 0.30em;
+          padding: 8px 2px; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s; }
+  nav a:hover { color: var(--ink); }
+  nav a.active { color: #fff; border-bottom-color: var(--accent); }
+  #btnMute { font-size: 14px; letter-spacing: 0; padding: 6px 2px; opacity: .75; }
+  #btnMute:hover { opacity: 1; }
+
+  /* ---------- 板块说明（左下角，克制） ---------- */
+  #caption { position: fixed; left: clamp(16px, 4vw, 44px); bottom: 30px; z-index: 15;
+             color: var(--ink); pointer-events: none; max-width: 340px; }
+  #caption h1 { font: 300 clamp(22px, 3.4vw, 34px)/1.25 system-ui, "PingFang SC", sans-serif;
+                margin: 0 0 8px; letter-spacing: 0.14em; }
+  #caption p { font: 400 12px/1.9 system-ui, "PingFang SC", sans-serif; color: var(--dim);
+               margin: 0; letter-spacing: 0.12em; }
+
+  /* ---------- 结构板块：分段标签层 ---------- */
+  #labels { position: fixed; inset: 0; z-index: 10; pointer-events: none; overflow: hidden; }
+  .part-label { position: absolute; white-space: nowrap; opacity: 0; transition: opacity .4s; }
+  .part-label.R { transform: translate(14px, -50%); border-left: 2px solid var(--accent); padding: 3px 0 3px 10px; }
+  .part-label.L { transform: translate(calc(-100% - 14px), -50%); border-right: 2px solid var(--accent); padding: 3px 10px 3px 0; text-align: right; }
+  .part-label b { display: block; font: 600 13px/1.5 system-ui, "PingFang SC", sans-serif;
+                  color: #fff; letter-spacing: 0.14em; }
+  .part-label span { display: block; font: 400 10.5px/1.5 system-ui, "PingFang SC", sans-serif;
+                     color: var(--dim); letter-spacing: 0.08em; }
+  .part-label.hi b { color: #9ec7ff; }
+  .leader { position: absolute; height: 1px; background: rgba(120,160,210,.55); transform-origin: 0 50%;
+            opacity: 0; transition: opacity .4s; }
+  .leader::after { content: ''; position: absolute; right: -2px; top: -2px; width: 5px; height: 5px;
+                   border-radius: 50%; background: rgba(140,180,225,.9); }
+
+  /* ---------- 发射板块：HUD ---------- */
+  #hud { position: fixed; inset: 0; z-index: 15; pointer-events: none; display: none; }
+  #countdown { position: absolute; top: 16%; left: 50%; transform: translateX(-50%);
+               font: 200 clamp(54px, 10vw, 110px)/1 system-ui, sans-serif; color: #fff;
+               letter-spacing: 0.08em; text-shadow: 0 0 30px rgba(255,122,60,.45); opacity: 0; }
+  #launchMsg { position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+               font: 400 13px/1 system-ui, "PingFang SC", sans-serif; color: var(--dim); letter-spacing: 0.4em; }
+  #btnRow { position: absolute; bottom: 7%; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 18px; pointer-events: auto; }
+  .actbtn { display: inline-block; cursor: pointer; padding: 13px 44px; color: var(--ink); text-decoration: none;
+            font: 500 14px/1 system-ui, "PingFang SC", sans-serif; letter-spacing: 0.5em; text-indent: 0.5em;
+            border: 1px solid rgba(160,190,230,.45); border-radius: 2px; background: rgba(10,18,32,.62);
+            transition: all .25s; }
+  .actbtn:hover { border-color: #fff; color: #fff; background: rgba(30,50,80,.45); }
+  .actbtn.warn:hover { border-color: var(--warm); color: var(--warm); }
+  .actbtn[disabled] { opacity: .35; pointer-events: none; }
+
+  /* ---------- 总览板块：双箭切换 + 高度标签 ---------- */
+  #rocketSwitch { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 16;
+                  display: flex; gap: 6px; padding: 5px; border-radius: 999px;
+                  background: rgba(10, 18, 32, 0.62); border: 1px solid rgba(160, 190, 230, 0.28);
+                  user-select: none; }
+  #rocketSwitch a { cursor: pointer; padding: 9px 20px; border-radius: 999px; color: var(--dim);
+                    font: 500 12.5px/1 system-ui, "PingFang SC", sans-serif; letter-spacing: 0.22em; text-indent: 0.22em;
+                    transition: all .25s; white-space: nowrap; }
+  #rocketSwitch a:hover { color: var(--ink); }
+  #rocketSwitch a.active { color: #fff; background: rgba(59, 130, 196, 0.38); }
+  .top-label { position: fixed; z-index: 14; pointer-events: none; opacity: 0; transition: opacity .4s;
+               transform: translate(-50%, -100%); text-align: center; white-space: nowrap; }
+  .top-label b { display: block; font: 600 13px/1.6 system-ui, "PingFang SC", sans-serif;
+                 color: #fff; letter-spacing: 0.16em; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  .top-label span { display: block; font: 400 10.5px/1.5 system-ui, "PingFang SC", sans-serif;
+                    color: var(--dim); letter-spacing: 0.1em; text-shadow: 0 1px 6px rgba(0,0,0,.8); }
+  .top-label.delta b { color: #9ec7ff; font-weight: 500; letter-spacing: 0.1em; }
+
+  @media (max-width: 640px) {
+    #brand .en { display: none; }
+    #brand .cn { font-size: 15px; letter-spacing: 0.3em; }
+    nav a { font-size: 12px; letter-spacing: 0.2em; }
+    #caption { bottom: 22px; max-width: 240px; }
+    #caption p { display: none; }
+    .part-label b { font-size: 11px; } .part-label span { display: none; }
+    #rocketSwitch { top: 66px; bottom: auto; }
+    #rocketSwitch a { padding: 8px 13px; font-size: 11.5px; letter-spacing: 0.12em; }
+    .top-label b { font-size: 11px; } .top-label span { display: none; }
+  }
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three/build/three.module.js",
+    "three/addons/": "./vendor/three/examples/jsm/",
+    "three/examples/jsm/": "./vendor/three/examples/jsm/",
+    "gsap": "./vendor/gsap/index.js",
+    "gsap/": "./vendor/gsap/",
+    "camera-controls": "./vendor/camera-controls/dist/camera-controls.module.js",
+    "three-mesh-bvh": "./vendor/three-mesh-bvh/build/index.module.js",
+    "three-bvh-csg": "./vendor/three-bvh-csg/build/index.module.js",
+    "postprocessing": "./vendor/postprocessing/build/index.js",
+    "simplex-noise": "./vendor/simplex-noise/dist/esm/simplex-noise.js"
+  }
+}
+</script>
+</head>
+<body>
+<div id="loading">长征五号 · 加载中</div>
+
+<header id="topbar">
+  <div id="brand"><span class="cn">长征五号</span><span class="en">LONG MARCH 5 · CZ-5</span></div>
+  <nav>
+    <a class="active" data-sec="overview">总 览</a>
+    <a data-sec="structure">结 构</a>
+    <a data-sec="launch">发 射</a>
+    <a id="btnMute" title="发射音效开关">🔊</a>
+  </nav>
+</header>
+
+<div id="caption">
+  <h1>双箭并立</h1>
+  <p>长征五号 57 m × 长征七号 53.1 m · 真实比例同场<br/>文昌航天发射场 · 夜幕</p>
+</div>
+
+<div id="labels"></div>
+
+<div id="rocketSwitch">
+  <a class="active" data-rk="both">并 排</a>
+  <a data-rk="cz5">长征五号</a>
+  <a data-rk="cz7">长征七号</a>
+</div>
+
+<div id="topLabels">
+  <div class="top-label" id="tlCZ5"><b>长征五号 · 57 m</b><span>芯级 Ø5.0 m · 助推器 Ø3.35 m ×4</span></div>
+  <div class="top-label" id="tlCZ7"><b>长征七号 · 53.1 m</b><span>芯级 Ø3.35 m · 助推器 Ø2.25 m ×4</span></div>
+  <div class="top-label delta" id="tlDelta"><b>Δ 4.2 m</b></div>
+</div>
+
+<div id="hud">
+  <div id="launchMsg"></div>
+  <div id="countdown"></div>
+  <div id="btnRow">
+    <a class="actbtn warn" id="btnIgnite">点 火</a>
+    <a class="actbtn" id="btnReset" style="display:none">重 置</a>
+  </div>
+</div>
+
+<script type="module" src="./main.js"></script>
+
+
+</body></html>

@@ -1,0 +1,431 @@
+{
+  "volume": "frontier-shelf-07",
+  "title": "Frontier VII — 22 live worlds",
+  "generated": "2026-11-25",
+  "entries": 22,
+  "ranks": {
+    "start": 651,
+    "end": 672
+  },
+  "summary": "22 个 Kimi / FC 部署站点，全部作为本地可运行页面收录；jellyfish 同时保留线上 WebGL 产物与 holtsetio/aurelia 上游 WebGPU 源码。",
+  "sites": [
+    {
+      "rank": 651,
+      "slug": "inmotion",
+      "title": "IN MOTION",
+      "subtitle": "Catch the motion",
+      "entry": "index.html",
+      "source": "https://inmotion.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "WebGL",
+        "运动实验",
+        "模块化源码"
+      ],
+      "desc": "五个动作词，五段可切换的运动影像；用粒子、排版和动势把“运动”拆成可触摸的瞬间。",
+      "note": "WebGL 实时渲染",
+      "path": "./sites/inmotion/index.html",
+      "kind_label": "模块化源码",
+      "host": "inmotion.ok.kimi.link"
+    },
+    {
+      "rank": 652,
+      "slug": "light-color-dance",
+      "title": "光色之舞",
+      "subtitle": "印象派大师展",
+      "entry": "index.html",
+      "source": "https://ehwy2waoquu4s.ok.kimi.link/",
+      "kind": "bundle",
+      "tags": [
+        "React",
+        "展览叙事",
+        "压缩 bundle"
+      ],
+      "desc": "一座印象派展厅：React 单页、色块与画布交织，滚动时像走进一幅会呼吸的画。",
+      "note": "React Router basename 已改为目录相对路径",
+      "path": "./sites/light-color-dance/index.html",
+      "kind_label": "压缩 bundle",
+      "host": "ehwy2waoquu4s.ok.kimi.link"
+    },
+    {
+      "rank": 653,
+      "slug": "field-buffer",
+      "title": "FIELD",
+      "subtitle": "一段缓冲区的四种状态",
+      "entry": "index.html",
+      "source": "https://mp2omwzlqp2mg.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "WebGPU",
+        "TSL",
+        "模块化源码"
+      ],
+      "desc": "同一片场域的四种状态：用 WebGPU 计算通道和 TSL 着色器写出地形、光线与秩序的切换。",
+      "note": "需要支持 WebGPU 的浏览器",
+      "path": "./sites/field-buffer/index.html",
+      "kind_label": "模块化源码",
+      "host": "mp2omwzlqp2mg.ok.kimi.link"
+    },
+    {
+      "rank": 654,
+      "slug": "tiffany-lamp",
+      "title": "蒂凡尼彩绘玻璃台灯",
+      "subtitle": "Tiffany stained-glass lamp",
+      "entry": "index.html",
+      "source": "https://knxlya43lfegi.ok.kimi.link/",
+      "kind": "inline",
+      "tags": [
+        "Three.js",
+        "材质研究",
+        "单文件内嵌"
+      ],
+      "desc": "一盏蒂凡尼彩绘玻璃台灯：在单片 HTML 里完成建模、玻璃材质与暖光。",
+      "note": "单文件内嵌代码",
+      "path": "./sites/tiffany-lamp/index.html",
+      "kind_label": "单文件内嵌",
+      "host": "knxlya43lfegi.ok.kimi.link"
+    },
+    {
+      "rank": 655,
+      "slug": "sunset-collector",
+      "title": "日落收藏家",
+      "subtitle": "Sunset Collector",
+      "entry": "index.html",
+      "source": "https://fpur2umqgt2bu.ok.kimi.link/",
+      "kind": "bundle",
+      "tags": [
+        "Three.js",
+        "空间叙事",
+        "压缩 bundle"
+      ],
+      "desc": "把落日收进房间：公寓、窗景与一天里不断变化的橙色光线。",
+      "note": "包含 30 MB 公寓模型",
+      "path": "./sites/sunset-collector/index.html",
+      "kind_label": "压缩 bundle",
+      "host": "fpur2umqgt2bu.ok.kimi.link"
+    },
+    {
+      "rank": 656,
+      "slug": "cz5",
+      "title": "长征五号",
+      "subtitle": "CZ-5 · 中国航天",
+      "entry": "index.html",
+      "source": "https://hxp6ckmqfulbm.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "航天",
+        "模块化源码"
+      ],
+      "desc": "长征五号与发射台：从箭体、助推器到海边发射场的实时 3D 场景。",
+      "note": "模块化源码",
+      "path": "./sites/cz5/index.html",
+      "kind_label": "模块化源码",
+      "host": "hxp6ckmqfulbm.ok.kimi.link"
+    },
+    {
+      "rank": 657,
+      "slug": "moonshot-concept-r",
+      "title": "MOONSHOT Concept R",
+      "subtitle": "轨道立方发布",
+      "entry": "index.html",
+      "source": "https://bfqywdgssqppc.ok.kimi.link/",
+      "kind": "inline",
+      "tags": [
+        "Three.js",
+        "概念车",
+        "单文件内嵌"
+      ],
+      "desc": "MOONSHOT Concept R 的轨道立方发布会：低轨道光线里的概念车与品牌叙事。",
+      "note": "单文件内嵌代码",
+      "path": "./sites/moonshot-concept-r/index.html",
+      "kind_label": "单文件内嵌",
+      "host": "bfqywdgssqppc.ok.kimi.link"
+    },
+    {
+      "rank": 658,
+      "slug": "jellyfish",
+      "title": "Aurelia",
+      "subtitle": "实时生成水母",
+      "entry": "index.html",
+      "source": "https://jellyfish.ok.kimi.link/",
+      "kind": "bundle-source",
+      "tags": [
+        "WebGL",
+        "程序化动画",
+        "bundle + 上游源码"
+      ],
+      "desc": "一群会呼吸的水母：线上是 WebGL 精简移植版，仓库同时保留 holtsetio/aurelia 的 WebGPU/TSL 上游源码。",
+      "note": "线上产物 + 上游源码",
+      "path": "./sites/jellyfish/index.html",
+      "kind_label": "bundle + 上游源码",
+      "host": "jellyfish.ok.kimi.link"
+    },
+    {
+      "rank": 659,
+      "slug": "ev7-helmet",
+      "title": "Moonshot EV-7",
+      "subtitle": "舱外活动头盔",
+      "entry": "index.html",
+      "source": "https://fk47bkcgsbnhi.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "工业设计",
+        "模块化源码"
+      ],
+      "desc": "Moonshot EV-7 舱外活动头盔：面罩、结构件与冷色光下的工业设计研究。",
+      "note": "模块化源码",
+      "path": "./sites/ev7-helmet/index.html",
+      "kind_label": "模块化源码",
+      "host": "fk47bkcgsbnhi.ok.kimi.link"
+    },
+    {
+      "rank": 660,
+      "slug": "open-sea-webgpu",
+      "title": "Open Sea",
+      "subtitle": "WebGPU Ocean",
+      "entry": "index.html",
+      "source": "https://deployma-webgpu-tfywsgwrmm.cn-beijing-vpc.fcapp.run/",
+      "kind": "module",
+      "tags": [
+        "WebGPU",
+        "TSL",
+        "模块化源码"
+      ],
+      "desc": "用 WebGPU 与 TSL 节点材质写出的海面：浪、雾、天光和无限延展的水平线。",
+      "note": "需要支持 WebGPU 的浏览器",
+      "path": "./sites/open-sea-webgpu/index.html",
+      "kind_label": "模块化源码",
+      "host": "deployma-webgpu-tfywsgwrmm.cn-beijing-vpc.fcapp.run"
+    },
+    {
+      "rank": 661,
+      "slug": "cloud-storage",
+      "title": "云储存",
+      "subtitle": "个人云盘",
+      "entry": "index.html",
+      "source": "https://dash-cloud-storage-cn.ok.kimi.link/",
+      "kind": "bundle",
+      "tags": [
+        "React",
+        "UI demo",
+        "压缩 bundle"
+      ],
+      "desc": "一套个人云盘界面：文件夹、文件列表、上传托盘与演示数据；本地以 backend:false 运行。",
+      "note": "本地 demo 模式，不连接真实后端",
+      "path": "./sites/cloud-storage/index.html",
+      "kind_label": "压缩 bundle",
+      "host": "dash-cloud-storage-cn.ok.kimi.link"
+    },
+    {
+      "rank": 662,
+      "slug": "limonaia",
+      "title": "Limonaia",
+      "subtitle": "Amalfi lemons, one pull away",
+      "entry": "index.html",
+      "source": "https://limonaia.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "产品叙事",
+        "模块化源码"
+      ],
+      "desc": "阿马尔菲的柠檬园：用一次“拉拽”把南意大利的黄色、海风与果园带到眼前。",
+      "note": "模块化源码",
+      "path": "./sites/limonaia/index.html",
+      "kind_label": "模块化源码",
+      "host": "limonaia.ok.kimi.link"
+    },
+    {
+      "rank": 663,
+      "slug": "r4360",
+      "title": "R-4360 Wasp Major",
+      "subtitle": "4-Row Radial · Engineering Dashboard R1",
+      "entry": "index.html",
+      "source": "https://k3-r4360.ok.kimi.link/",
+      "kind": "inline",
+      "tags": [
+        "Three.js",
+        "航空工程",
+        "单文件内嵌"
+      ],
+      "desc": "四排星型发动机的工程示意仪表盘：零件、剖面与转速信息在同一位面展开。",
+      "note": "单文件内嵌代码",
+      "path": "./sites/r4360/index.html",
+      "kind_label": "单文件内嵌",
+      "host": "k3-r4360.ok.kimi.link"
+    },
+    {
+      "rank": 664,
+      "slug": "open-heart",
+      "title": "Kimi — Open Heart",
+      "subtitle": "机械腕表研究",
+      "entry": "index.html",
+      "source": "https://k3-open-heart.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "腕表",
+        "模块化源码"
+      ],
+      "desc": "Kimi Open Heart 机械腕表：从整表到机芯、从表盘到陀飞轮的镜头叙事。",
+      "note": "包含 Draco 压缩模型与材质 bake",
+      "path": "./sites/open-heart/index.html",
+      "kind_label": "模块化源码",
+      "host": "k3-open-heart.ok.kimi.link"
+    },
+    {
+      "rank": 665,
+      "slug": "k3-microscope",
+      "title": "K3 Compound Microscope",
+      "subtitle": "Exploded Optical Study",
+      "entry": "index.html",
+      "source": "https://k3-microscope.ok.kimi.link/",
+      "kind": "inline",
+      "tags": [
+        "Three.js",
+        "爆炸视图",
+        "单文件内嵌"
+      ],
+      "desc": "K3 复合显微镜的爆炸光学研究：镜筒、物镜与光路在空间中拆开。",
+      "note": "单文件内嵌代码",
+      "path": "./sites/k3-microscope/index.html",
+      "kind_label": "单文件内嵌",
+      "host": "k3-microscope.ok.kimi.link"
+    },
+    {
+      "rank": 666,
+      "slug": "k3-piano-sound-path",
+      "title": "KIMI · From Touch to Sound",
+      "subtitle": "从触碰到声音",
+      "entry": "sound-path.html",
+      "source": "https://k3-piano-cfx.ok.kimi.link/sound-path.html",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "钢琴",
+        "模块化源码"
+      ],
+      "desc": "一架三角钢琴的结构与发声路径：从琴键、弦到音板的旅程。",
+      "note": "3D 模型页，页面没有 canvas 标签但截图正常",
+      "path": "./sites/k3-piano-sound-path/sound-path.html",
+      "kind_label": "模块化源码",
+      "host": "k3-piano-cfx.ok.kimi.link"
+    },
+    {
+      "rank": 667,
+      "slug": "goodluck-bobing",
+      "title": "Goodluck",
+      "subtitle": "中秋博饼",
+      "entry": "bobing.html",
+      "source": "https://goodluck.ok.kimi.link/bobing.html",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "物理",
+        "模块化源码"
+      ],
+      "desc": "中秋博饼：骰子落进碗里，月洞门、茶桌与闽南红色在物理模拟中复活。",
+      "note": "包含 Rapier 物理与 GLTF 道具",
+      "path": "./sites/goodluck-bobing/bobing.html",
+      "kind_label": "模块化源码",
+      "host": "goodluck.ok.kimi.link"
+    },
+    {
+      "rank": 668,
+      "slug": "timber-tower",
+      "title": "TIMBER TOWER",
+      "subtitle": "A Rapier Physics Duel",
+      "entry": "index.html",
+      "source": "https://timber-tower.ok.kimi.link/",
+      "kind": "bundle",
+      "tags": [
+        "Rapier",
+        "物理对决",
+        "压缩 bundle"
+      ],
+      "desc": "一座木塔的 Rapier 物理对决：抽、推、撞，看结构在重力里崩塌。",
+      "note": "压缩 bundle",
+      "path": "./sites/timber-tower/index.html",
+      "kind_label": "压缩 bundle",
+      "host": "timber-tower.ok.kimi.link"
+    },
+    {
+      "rank": 669,
+      "slug": "aeolis-01",
+      "title": "AEOLIS 01",
+      "subtitle": "火星地表探索概念车",
+      "entry": "index.html",
+      "source": "https://5qgbge2wajz2k.ok.kimi.link/",
+      "kind": "inline",
+      "tags": [
+        "Three.js",
+        "概念车",
+        "单文件内嵌"
+      ],
+      "desc": "AEOLIS 01 火星地表探索概念车：为红色荒原设计的低重力移动机器。",
+      "note": "单文件内嵌代码",
+      "path": "./sites/aeolis-01/index.html",
+      "kind_label": "单文件内嵌",
+      "host": "5qgbge2wajz2k.ok.kimi.link"
+    },
+    {
+      "rank": 670,
+      "slug": "mnt-reform",
+      "title": "MNT Reform",
+      "subtitle": "模块之内",
+      "entry": "index.html",
+      "source": "https://mnt-reform-laptop-exploded.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "开源硬件",
+        "模块化源码"
+      ],
+      "desc": "MNT Reform 开源笔记本的交互装配：1005 个部件、10 个总成、11 条线束，逐层拆开。",
+      "note": "模块化源码",
+      "path": "./sites/mnt-reform/index.html",
+      "kind_label": "模块化源码",
+      "host": "mnt-reform-laptop-exploded.ok.kimi.link"
+    },
+    {
+      "rank": 671,
+      "slug": "gringotts-lighting",
+      "title": "古灵阁",
+      "subtitle": "灯光控制台",
+      "entry": "index.html",
+      "source": "https://gringottslighting.ok.kimi.link/",
+      "kind": "bundle",
+      "tags": [
+        "Three.js",
+        "灯光交互",
+        "压缩 bundle"
+      ],
+      "desc": "古灵阁的灯光控制台：用一排开关和光锥，把魔法世界的银行大殿点亮。",
+      "note": "压缩 bundle",
+      "path": "./sites/gringotts-lighting/index.html",
+      "kind_label": "压缩 bundle",
+      "host": "gringottslighting.ok.kimi.link"
+    },
+    {
+      "rank": 672,
+      "slug": "fish-and-me",
+      "title": "Fish&me",
+      "subtitle": "斗鱼、窗与光",
+      "entry": "index.html",
+      "source": "https://fish-and-me.ok.kimi.link/",
+      "kind": "module",
+      "tags": [
+        "Three.js",
+        "实时动画",
+        "模块化源码"
+      ],
+      "desc": "一条斗鱼在窗与光之间游动：骨骼链、尾鳍与折射光共同构成实时场景。",
+      "note": "包含蒙皮动画与 GLTF 模型",
+      "path": "./sites/fish-and-me/index.html",
+      "kind_label": "模块化源码",
+      "host": "fish-and-me.ok.kimi.link"
+    }
+  ]
+}

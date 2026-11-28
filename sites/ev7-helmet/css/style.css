@@ -1,0 +1,133 @@
+/* Moonshot EV-7 — 页面样式 */
+  :root{
+    --stage-1:#1b1f23;
+    --stage-2:#0a0b0d;
+    --ink:#dfe3e6;
+    --ink-2:#8b949b;
+    --ink-3:#5e666c;
+    --line:rgba(223,227,230,.16);
+    --line-2:rgba(223,227,230,.08);
+    --panel:rgba(12,14,16,.52);
+    --accent:#79a9bd;
+    --shadow-alpha:.42;
+  }
+  :root:not([data-theme="dark"]){
+    --stage-1:#eceef0;
+    --stage-2:#c2c6ca;
+    --ink:#1c2023;
+    --ink-2:#5c656b;
+    --ink-3:#8a9298;
+    --line:rgba(28,32,35,.20);
+    --line-2:rgba(28,32,35,.09);
+    --panel:rgba(245,246,247,.55);
+    --accent:#2f6b85;
+    --shadow-alpha:.22;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --stage-1:#1b1f23; --stage-2:#0a0b0d;
+      --ink:#dfe3e6; --ink-2:#8b949b; --ink-3:#5e666c;
+      --line:rgba(223,227,230,.16); --line-2:rgba(223,227,230,.08);
+      --panel:rgba(12,14,16,.52); --accent:#79a9bd; --shadow-alpha:.42;
+    }
+  }
+  :root[data-theme="dark"]{
+    --stage-1:#1b1f23; --stage-2:#0a0b0d;
+    --ink:#dfe3e6; --ink-2:#8b949b; --ink-3:#5e666c;
+    --line:rgba(223,227,230,.16); --line-2:rgba(223,227,230,.08);
+    --panel:rgba(12,14,16,.52); --accent:#79a9bd; --shadow-alpha:.42;
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    margin:0; color:var(--ink);
+    background:var(--stage-2);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    font-size:13px; line-height:1.5;
+    overflow:hidden;
+    font-variant-numeric:tabular-nums;
+  }
+  #stage{position:fixed; inset:0;
+    background:radial-gradient(120% 90% at 50% 34%, var(--stage-1) 0%, var(--stage-2) 68%);}
+  canvas{position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; cursor:grab}
+  canvas.dragging{cursor:grabbing}
+
+  .chrome{position:fixed; z-index:3}
+  #vig{position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(78% 66% at 50% 44%, rgba(0,0,0,0) 52%, rgba(0,0,0,.30) 100%)}
+  :root:not([data-theme="dark"]) #vig{background:radial-gradient(78% 66% at 50% 44%, rgba(0,0,0,0) 55%, rgba(30,36,42,.16) 100%)}
+  #brand,#spec,#hint{pointer-events:none}
+  #brand{top:22px; left:24px}
+  #brand .wm{font-size:16px; font-weight:600; letter-spacing:.34em; margin:0 0 7px}
+  #brand .md{margin:0; font-size:12px; color:var(--ink-2); letter-spacing:.04em}
+  #brand .md span{color:var(--ink-3)}
+
+  #shots{top:22px; right:24px; text-align:right}
+  #shots h2{margin:0 0 8px; font-size:11px; font-weight:400; color:var(--ink-3); letter-spacing:.16em}
+  #shots button{display:block; margin-left:auto; position:relative; padding-right:0}
+  #shots button.on::after{content:''; position:absolute; right:-14px; top:50%; width:8px; height:1px; background:var(--accent)}
+
+  button{
+    font:inherit; font-size:12px; color:var(--ink-2);
+    background:none; border:0; padding:5px 0; cursor:pointer;
+    letter-spacing:.05em; transition:color .18s;
+  }
+  button:hover{color:var(--ink)}
+  button:focus-visible{outline:1px solid var(--accent); outline-offset:3px}
+  button[aria-pressed="true"], button.on{color:var(--ink)}
+  #shots button.on{color:var(--accent)}
+
+  #spec{left:24px; bottom:24px; width:296px; border-top:1px solid var(--line)}
+  #spec dl{margin:0; display:grid; grid-template-columns:70px 1fr}
+  #spec dt{padding:7.5px 0; color:var(--ink-3); font-size:11.5px; border-bottom:1px solid var(--line-2)}
+  #spec dd{margin:0; padding:7px 0; color:var(--ink-2); font-size:11.5px; border-bottom:1px solid var(--line-2)}
+
+  #dock{right:24px; bottom:24px; width:212px; text-align:right; border-top:1px solid var(--line); padding-top:10px}
+  #dock .row{display:flex; justify-content:flex-end; gap:18px; flex-wrap:wrap}
+  #ex{margin:2px 0 12px}
+  #ex label{display:flex; align-items:center; gap:10px; color:var(--ink-3); font-size:11.5px}
+  #ex output{color:var(--ink-2); width:34px; text-align:right}
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; flex:1; height:16px; background:none; cursor:ew-resize; margin:0;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:1px; background:var(--line)}
+  input[type=range]::-moz-range-track{height:1px; background:var(--line)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:9px; height:9px; margin-top:-4px; border-radius:50%; background:var(--accent)}
+  input[type=range]::-moz-range-thumb{width:9px; height:9px; border:0; border-radius:50%; background:var(--accent)}
+  input[type=range]:focus-visible{outline:1px solid var(--accent); outline-offset:4px}
+
+  #hint{position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:3;
+    color:var(--ink-3); font-size:11px; letter-spacing:.06em; transition:opacity .5s}
+
+  #labels{position:absolute; inset:0; pointer-events:none; z-index:2}
+  .lb{position:absolute; transform:translate(-4px,-50%); white-space:nowrap; opacity:0; transition:opacity .3s}
+  .lb.vis{opacity:1}
+  .lb i{display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--accent); vertical-align:middle}
+  .lb u{display:inline-block; width:26px; height:1px; background:var(--line); vertical-align:middle; text-decoration:none}
+  .lb b{font-weight:500; font-size:11.5px; color:var(--ink)}
+  .lb s{display:block; margin-left:31px; text-decoration:none; font-size:10.5px; color:var(--ink-3); letter-spacing:.04em}
+  .lb.r{transform:translate(calc(-100% + 4px),-50%); text-align:right}
+  .lb.r s{margin:0 31px 0 0}
+
+  #loader{position:fixed; inset:0; z-index:9; display:grid; place-content:center; gap:14px;
+    background:var(--stage-2); transition:opacity .6s; text-align:center}
+  #loader p{margin:0; font-size:11.5px; color:var(--ink-3); letter-spacing:.14em}
+  #bar{width:160px; height:1px; background:var(--line); position:relative; overflow:hidden}
+  #bar i{position:absolute; inset:0; background:var(--accent); transform-origin:left; transform:scaleX(0); transition:transform .4s}
+  #loader.gone{opacity:0; pointer-events:none}
+
+  @media (max-width:760px){
+    #spec{display:none}
+    #brand{top:14px; left:16px}
+    #brand .wm{font-size:15px}
+    #shots{top:12px; right:16px}
+    #shots h2{display:none}
+    #shots button{font-size:11.5px; padding:3px 0}
+    #dock{left:16px; right:16px; bottom:14px; width:auto; text-align:left}
+    #dock .row{justify-content:space-between; gap:10px}
+    #ex label{color:var(--ink-3)}
+    #hint{display:none}
+    .lb s{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition-duration:.01ms !important} }

@@ -1,0 +1,1585 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<link rel="icon" href="data:,"/>
+<title>MOONSHOT Concept R · 轨道立方发布</title>
+<style>
+  :root{
+    --blue:#2e8bff; --cyan:#59c2ff;
+    --ink:#e8edf6; --dim:#94a2b8; --bg:#05070c;
+    --line:rgba(150,180,230,.16); --line2:rgba(89,194,255,.38);
+  }
+  :root:not([data-theme="light"]){color-scheme:dark;}
+  :root[data-theme="dark"]{color-scheme:dark;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;}}
+  *{box-sizing:border-box;}
+  html{scroll-behavior:auto;}
+  body{margin:0;background:var(--bg);color:var(--ink);overflow-x:hidden;
+    font-family:"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",
+      "Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+    font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased;
+    transition:background .6s,color .6s;}
+  canvas{display:block;}
+  #stage3d{position:fixed;inset:0;z-index:0;touch-action:pan-y;}
+
+  #scroll{position:relative;z-index:1;pointer-events:none;}
+  .sec{min-height:100vh;min-height:100dvh;display:flex;align-items:center;padding:0 clamp(22px,7vw,104px);}
+  .sec.r{justify-content:flex-end;text-align:right;}
+  .copy{max-width:30ch;opacity:0;transform:translateY(16px);transition:opacity .55s,transform .55s;}
+  .copy .num{display:block;margin-bottom:13px;color:var(--cyan);font-size:10.5px;
+    letter-spacing:.32em;font-variant-numeric:tabular-nums;}
+  .copy h2{margin:0 0 12px;font-size:clamp(21px,2.7vw,32px);font-weight:500;line-height:1.32;}
+  .copy p{margin:0;color:var(--dim);font-size:13.5px;line-height:1.85;}
+  .copy .rule{width:36px;height:1px;background:var(--line2);margin-top:16px;}
+  .sec.r .copy .rule{margin-left:auto;}
+
+  .ui{position:fixed;pointer-events:none;z-index:4;}
+  .ui *{pointer-events:auto;}
+  #brand{top:0;left:0;padding:24px clamp(22px,7vw,104px);}
+  #brand .mark{margin:0;font-size:14px;font-weight:600;letter-spacing:.4em;}
+  #brand .mark em{color:var(--blue);font-style:normal;}
+  #dots{top:50%;right:clamp(16px,3vw,34px);transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:11px;}
+  #dots i{display:block;width:1px;height:22px;background:rgba(150,180,230,.2);transition:background .4s;}
+  #dots i.on{background:var(--cyan);}
+  #hint{bottom:24px;left:50%;transform:translateX(-50%);color:var(--dim);
+    font-size:10.5px;letter-spacing:.24em;transition:opacity .5s;}
+  #hint.dim{opacity:0;}
+
+  #deck{bottom:0;left:0;right:0;display:flex;justify-content:center;padding:0 14px 20px;
+    opacity:0;visibility:hidden;transform:translateY(10px);
+    transition:opacity .35s,transform .35s,visibility .35s;}
+  #deck.show{opacity:1;visibility:visible;transform:none;}
+  .deck-in{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;align-items:center;
+    background:rgba(8,13,22,.66);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid var(--line);border-radius:3px;padding:8px;max-width:min(940px,100%);}
+  .grp{display:flex;gap:4px;}
+  .sep{width:1px;align-self:stretch;background:var(--line);margin:2px 6px;}
+  button{font:inherit;font-size:12px;color:var(--dim);background:transparent;
+    border:1px solid transparent;border-radius:3px;padding:7px 12px;cursor:pointer;white-space:nowrap;
+    transition:color .18s,border-color .18s,background .18s;}
+  button:hover{color:var(--ink);border-color:var(--line);}
+  button:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;}
+  button[aria-pressed="true"],button.on{color:var(--ink);border-color:var(--line2);
+    background:rgba(46,139,255,.16);}
+  #btn-back{color:var(--cyan);}
+
+  #card{top:50%;left:clamp(22px,7vw,104px);transform:translateY(-50%) translateX(-12px);width:246px;
+    background:rgba(8,13,22,.66);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border:1px solid var(--line);border-radius:3px;padding:18px;
+    opacity:0;visibility:hidden;transition:opacity .4s,transform .4s,visibility .4s;}
+  #card.show{opacity:1;visibility:visible;transform:translateY(-50%) translateX(0);}
+  #card h3{margin:0 0 3px;font-size:14px;font-weight:500;}
+  #card .en{margin:0 0 14px;color:var(--dim);font-size:10px;letter-spacing:.2em;}
+  #card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 12px;}
+  #card dt{color:var(--dim);font-size:11px;}
+  #card dd{margin:0;text-align:right;font-size:11.5px;font-variant-numeric:tabular-nums;}
+  #card p{margin:14px 0 0;color:var(--dim);font-size:11px;line-height:1.65;
+    border-top:1px solid var(--line);padding-top:12px;}
+
+  /* 浅色影棚：页面 UI 同步反转 */
+  body.lightenv{--ink:#16202c;--dim:#5e6c80;--bg:#e4e9f1;
+    --line:rgba(30,50,80,.16);--line2:rgba(46,139,255,.5);}
+  body.lightenv .deck-in,body.lightenv #card{background:rgba(255,255,255,.7);}
+
+  #veil{position:fixed;inset:0;z-index:20;background:#05070c;display:flex;align-items:center;
+    justify-content:center;flex-direction:column;gap:16px;transition:opacity .9s;color:#94a2b8;}
+  #veil.gone{opacity:0;pointer-events:none;}
+  #veil .mark{margin:0;font-size:13px;letter-spacing:.42em;color:#e8edf6;}
+  #veil .bar{width:170px;height:1px;background:rgba(89,194,255,.22);position:relative;overflow:hidden;}
+  #veil .bar i{position:absolute;inset:0;background:var(--blue);transform-origin:left;
+    transform:scaleX(0);transition:transform .35s;}
+  #veil small{letter-spacing:.16em;font-size:10px;}
+
+  @media (max-width:860px){
+    #dots{display:none;}
+    #brand{padding:18px 22px;}
+    .copy{max-width:26ch;}
+    #card{top:auto;bottom:106px;left:14px;right:14px;width:auto;transform:translateY(12px);}
+    #card.show{transform:none;}
+    button{padding:7px 9px;font-size:11.5px;}
+  }
+  @media (prefers-reduced-motion:reduce){.copy{transition:none;}}
+</style>
+</head>
+<body>
+<div id="stage3d"></div>
+
+<div id="scroll">
+  <section class="sec"><div class="copy"><span class="num">01 / 06</span>
+    <h2>MOONSHOT Concept R</h2>
+    <p>一台不为任何现行规则设计的开轮式赛车。它封在一只悬浮于近地轨道的立方取景框里，用来回答一个问题：如果空气不再是对手，车会长成什么样。</p>
+    <div class="rule"></div></div></section>
+  <section class="sec r"><div class="copy"><span class="num">02 / 06</span>
+    <h2>车头是一圈进气</h2>
+    <p>鼻锥正中开一个贯通的圆形进气口，外缘罩一道果冻蓝环。前翼两端向上卷起，环抱前轮——白色雕塑件，不是薄板。</p>
+    <div class="rule"></div></div></section>
+  <section class="sec"><div class="copy"><span class="num">03 / 06</span>
+    <h2>可乐瓶收腰</h2>
+    <p>侧箱在座舱后收到最宽，再一路收窄到后轴。侧身那条蓝色光带贴着侧箱下缘走，是整车唯一一条贯穿线。</p>
+    <div class="rule"></div></div></section>
+  <section class="sec r"><div class="copy"><span class="num">04 / 06</span>
+    <h2>覆盖件可以抬走</h2>
+    <p>鼻锥盖、引擎盖、两片侧箱盖都是独立半壳，扣在核心车体外 8 毫米处。抬起来，下面是浴缸座舱、电池组和后轴双电机。</p>
+    <div class="rule"></div></div></section>
+  <section class="sec"><div class="copy"><span class="num">05 / 06</span>
+    <h2>果冻蓝是灵魂材质</h2>
+    <p>尾翼主翼、大端板、座舱侧窗、导流叶都是同一种半透明蓝件：透光率 0.45、粗糙度 0.05、自带弱发光，且参与泛光。它要像啫喱，不像实心塑料。</p>
+    <div class="rule"></div></div></section>
+  <section class="sec r"><div class="copy"><span class="num">06 / 06</span>
+    <h2>拖动，接管镜头</h2>
+    <p>叙事到这里结束。按住拖动即可自由环视，工具条会出现：切机位、看材质微距、拆解覆盖件、在太空与白棚之间切换立方的气质。</p>
+    <div class="rule"></div></div></section>
+</div>
+
+<div class="ui" id="brand"><p class="mark">MOON<em>SHOT</em></p></div>
+<div class="ui" id="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="ui" id="hint">向下滚动 · 或按住拖动接管镜头</div>
+
+<div class="ui" id="card" role="status" aria-live="polite">
+  <h3 id="c-t">车漆</h3><p class="en" id="c-e">PAINT</p>
+  <dl id="c-l"></dl><p id="c-n"></p>
+</div>
+
+<div class="ui" id="deck"><div class="deck-in">
+  <div class="grp" id="views">
+    <button data-v="hero">后 3/4</button>
+    <button data-v="front">车头</button>
+    <button data-v="side">侧面</button>
+    <button data-v="top">俯视</button>
+  </div>
+  <div class="sep"></div>
+  <div class="grp" id="mats">
+    <button data-m="paint">车漆</button>
+    <button data-m="jelly">果冻蓝</button>
+    <button data-m="wheel">轮毂</button>
+  </div>
+  <div class="sep"></div>
+  <div class="grp">
+    <button id="b-ex" aria-pressed="false">展开拆解</button>
+    <button id="b-env" aria-pressed="false">白棚模式</button>
+    <button id="b-spin" aria-pressed="false">车轮转动</button>
+    <button id="b-back">继续叙事</button>
+  </div>
+</div></div>
+
+<div id="veil">
+  <p class="mark">MOONSHOT</p>
+  <div class="bar"><i id="v-bar"></i></div>
+  <small id="v-txt">正在放样车体曲面</small>
+</div>
+
+<script src="./vendor/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+/* ══════════ 工具：种子随机 / 放样 / 翼型 / 扫掠 / 程序贴图 ══════════ */
+const V3=(x,y,z)=>new THREE.Vector3(x,y,z);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const smooth=t=>t*t*(3-2*t);
+const easeIO=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function mulberry32(a){return function(){a|=0;a=(a+0x6D2B79F5)|0;
+  let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;
+  return((t^(t>>>14))>>>0)/4294967296;};}
+const rand=mulberry32(20260906);
+
+/* 放样：sections = 等长 Vector3 环数组 */
+function loftSections(sections,opt){
+  opt=opt||{};
+  const closed=opt.closed!==false;
+  const rc=sections.length,n=sections[0].length;
+  const pos=[],uvs=[],index=[];
+  for(let r=0;r<rc;r++)for(let i=0;i<n;i++){
+    const p=sections[r][i];
+    pos.push(p.x,p.y,p.z);uvs.push(i/n,r/(rc-1));
+  }
+  const stride=closed?n:n-1;
+  for(let r=0;r<rc-1;r++)for(let i=0;i<stride;i++){
+    const a=r*n+i,b=r*n+((i+1)%n),c=(r+1)*n+i,d=(r+1)*n+((i+1)%n);
+    index.push(a,c,b,b,c,d);
+  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  geo.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
+  geo.setIndex(index);
+  if(opt.capStart)addCap(geo,sections[0],true);
+  if(opt.capEnd)addCap(geo,sections[rc-1],false);
+  geo.computeVertexNormals();
+  return geo;
+}
+function addCap(geo,ring,flip){
+  const base=geo.getAttribute('position').count;
+  const center=new THREE.Vector3();
+  ring.forEach(p=>center.add(p));center.divideScalar(ring.length);
+  const pos=[center.x,center.y,center.z],uv=[0.5,0.5];
+  ring.forEach(p=>{pos.push(p.x,p.y,p.z);uv.push(0.5,0.5);});
+  const idx=[];
+  for(let i=0;i<ring.length;i++){
+    const a=base,b=base+1+i,c=base+1+((i+1)%ring.length);
+    if(flip)idx.push(a,c,b);else idx.push(a,b,c);
+  }
+  const oP=Array.from(geo.getAttribute('position').array);
+  const oU=Array.from(geo.getAttribute('uv').array);
+  const oI=Array.from(geo.getIndex().array);
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(oP.concat(pos),3));
+  geo.setAttribute('uv',new THREE.Float32BufferAttribute(oU.concat(uv),2));
+  geo.setIndex(oI.concat(idx));
+}
+/* NACA 四位翼型环（chord=1），+x 为前缘 */
+function airfoilRing(o){
+  o=o||{};
+  const chord=o.chord||1,thick=o.thick||0.1,n=o.n||28;
+  const pts=[],half=n/2;
+  const yt=x=>5*thick*chord*(0.2969*Math.sqrt(x)-0.1260*x-0.3516*x*x+0.2843*x*x*x-0.1036*x*x*x*x);
+  for(let i=half;i>=0;i--){const x=i/half;pts.push(new THREE.Vector2((0.5-x)*chord,yt(x)));}
+  for(let i=1;i<=half;i++){const x=i/half;pts.push(new THREE.Vector2((0.5-x)*chord,-yt(x)));}
+  return pts;
+}
+/* 沿路径扫掠扁带（弯板件：端板 / 天鹅颈 / 导流叶） */
+function sweepRibbon(path,o){
+  o=o||{};
+  const widthAt=o.widthAt||(()=>0.3),thickAt=o.thickAt||(()=>0.02);
+  const segs=o.segs||12,axis=o.axis||new THREE.Vector3(0,0,1);
+  const ring=[];
+  for(let i=0;i<=segs;i++){const a=(i/segs)*Math.PI*2;ring.push(new THREE.Vector2(Math.cos(a),Math.sin(a)));}
+  const sections=[];
+  for(let i=0;i<path.length;i++){
+    const t=i/(path.length-1),p=path[i];
+    const tangent=(i<path.length-1?path[i+1].clone().sub(p):p.clone().sub(path[i-1])).normalize();
+    let side=new THREE.Vector3().crossVectors(tangent,axis).normalize();
+    if(side.lengthSq()<1e-6)side=new THREE.Vector3(1,0,0);
+    const w=widthAt(t)/2,th=thickAt(t)/2;
+    sections.push(ring.map(r=>p.clone().addScaledVector(axis,r.x*w).addScaledVector(side,r.y*th)));
+  }
+  return loftSections(sections,{closed:true,capStart:true,capEnd:true});
+}
+function tubeBetween(a,b,radius,material,seg){
+  const dir=b.clone().sub(a),len=dir.length();
+  const m=new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,len,seg||10),material);
+  m.position.copy(a).addScaledVector(dir,0.5);
+  m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize());
+  m.castShadow=true;return m;
+}
+function canvasTexture(w,h,draw,srgb){
+  const c=document.createElement('canvas');c.width=w;c.height=h;
+  draw(c.getContext('2d'),w,h);
+  const t=new THREE.CanvasTexture(c);
+  if(srgb!==false)t.encoding=THREE.sRGBEncoding;
+  t.anisotropy=8;return t;
+}
+const FONT='"Arial Black","Helvetica Neue",Arial,sans-serif';
+function moonshotDecal(w,h){
+  return canvasTexture(w,h,function(g){
+    g.clearRect(0,0,w,h);
+    g.fillStyle='#f4f7fc';g.textAlign='center';g.textBaseline='middle';
+    let size=Math.floor(h*0.86);
+    g.font='italic 900 '+size+'px '+FONT;
+    while(g.measureText('MOONSHOT').width>w*0.94&&size>8){size-=4;g.font='italic 900 '+size+'px '+FONT;}
+    g.fillText('MOONSHOT',w/2,h/2+size*0.03);
+  });
+}
+function barcodeTexture(){
+  return canvasTexture(128,48,function(g,w,h){
+    g.fillStyle='#eef1f5';g.fillRect(0,0,w,h);
+    g.fillStyle='#14161a';
+    let x=8;const r=mulberry32(7);
+    while(x<w-8){const bw=1+Math.floor(r()*4);g.fillRect(x,6,bw,h-18);x+=bw+1+Math.floor(r()*3);}
+    g.font='7px monospace';g.fillText('R-01 86',10,h-4);
+  });
+}
+/* 涡轮轮毂罩贴图：碳纤维底 + 九片叶 + 蓝色叶尖拉丝 */
+function turbineTexture(){
+  return canvasTexture(512,512,function(g,w,h){
+    const cx=w/2,cy=h/2;
+    g.fillStyle='#0b0d11';g.fillRect(0,0,w,h);
+    g.globalAlpha=0.25;
+    for(let y=0;y<h;y+=6)for(let x=0;x<w;x+=6){
+      g.fillStyle=((x+y)/6)%2?'#101318':'#0a0c10';g.fillRect(x,y,6,6);
+    }
+    g.globalAlpha=1;
+    for(let i=0;i<9;i++){
+      g.save();g.translate(cx,cy);g.rotate((i/9)*Math.PI*2);
+      const grad=g.createLinearGradient(0,0,230,0);
+      grad.addColorStop(0,'#181c22');grad.addColorStop(0.55,'#232a33');
+      grad.addColorStop(0.8,'#2c3a4a');grad.addColorStop(1,'#1a2531');
+      g.fillStyle=grad;
+      g.beginPath();g.moveTo(40,-14);
+      g.quadraticCurveTo(150,-46,228,-20);g.lineTo(228,6);
+      g.quadraticCurveTo(150,-8,40,14);g.closePath();g.fill();
+      g.strokeStyle='rgba(64,150,255,0.55)';g.lineWidth=3;
+      g.beginPath();g.moveTo(120,-26);g.quadraticCurveTo(180,-34,226,-18);g.stroke();
+      g.restore();
+    }
+    const rg=g.createRadialGradient(cx,cy,6,cx,cy,60);
+    rg.addColorStop(0,'#3a424d');rg.addColorStop(0.6,'#15181d');rg.addColorStop(1,'#0b0d11');
+    g.fillStyle=rg;g.beginPath();g.arc(cx,cy,58,0,Math.PI*2);g.fill();
+    g.strokeStyle='rgba(89,194,255,0.7)';g.lineWidth=2.5;
+    g.beginPath();g.arc(cx,cy,46,0,Math.PI*2);g.stroke();
+    g.strokeStyle='rgba(0,0,0,0.65)';g.lineWidth=26;
+    g.beginPath();g.arc(cx,cy,236,0,Math.PI*2);g.stroke();
+  });
+}
+function platformTexture(){
+  return canvasTexture(1024,1024,function(g,w,h){
+    const cx=w/2,cy=h/2;
+    g.fillStyle='#07090e';g.fillRect(0,0,w,h);
+    const rg=g.createRadialGradient(cx,cy,40,cx,cy,w/2);
+    rg.addColorStop(0,'rgba(70,120,200,0.20)');rg.addColorStop(0.35,'rgba(50,90,160,0.10)');
+    rg.addColorStop(0.75,'rgba(20,32,58,0.04)');rg.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=rg;g.beginPath();g.arc(cx,cy,w/2,0,Math.PI*2);g.fill();
+    [0.22,0.31,0.47,0.62,0.71,0.86,0.94].forEach(function(r,i){
+      g.strokeStyle=i%3===0?'rgba(89,194,255,0.16)':'rgba(120,150,190,0.08)';
+      g.lineWidth=i%3===0?2:1;
+      g.beginPath();g.arc(cx,cy,r*w/2,0,Math.PI*2);g.stroke();
+    });
+    const r=mulberry32(42);
+    for(let i=0;i<2600;i++){
+      g.fillStyle='rgba(255,255,255,'+(r()*0.03)+')';
+      g.fillRect(r()*w,r()*h,1.5,1.5);
+    }
+  });
+}
+
+/* ══════════ 渲染器 / 场景 / 相机 ══════════ */
+const renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.7));
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.outputEncoding=THREE.LinearEncoding;   // sRGB 在合成阶段手动完成
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+document.getElementById('stage3d').appendChild(renderer.domElement);
+const W2=renderer.capabilities.isWebGL2;
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x05070c);
+scene.fog=null;
+const CAM_NEAR=0.15,CAM_FAR=2200;
+const camera=new THREE.PerspectiveCamera(30,window.innerWidth/window.innerHeight,CAM_NEAR,CAM_FAR);
+
+/* ══════════ 材质（r128 无 environmentIntensity，强度并入 envMapIntensity） ══════════ */
+const EI=0.75;
+const M={};
+M.blackPaint=new THREE.MeshPhysicalMaterial({color:0x0b0c10,metalness:0.25,roughness:0.16,
+  clearcoat:1.0,clearcoatRoughness:0.06,envMapIntensity:1.35*EI});
+M.carbon=new THREE.MeshPhysicalMaterial({color:0x11141a,metalness:0.4,roughness:0.42,
+  envMapIntensity:0.9*EI});
+M.whitePaint=new THREE.MeshPhysicalMaterial({color:0xd9dee5,metalness:0.05,roughness:0.5,
+  clearcoat:0.25,clearcoatRoughness:0.3,envMapIntensity:0.7*EI});
+/* 果冻蓝：透光啫喱，不是实心塑料 */
+M.jellyBlue=new THREE.MeshPhysicalMaterial({color:0x0d4ec4,metalness:0,roughness:0.05,
+  transparent:true,opacity:0.45,depthWrite:false,clearcoat:1,clearcoatRoughness:0.05,
+  emissive:0x1e6dff,emissiveIntensity:0.28,envMapIntensity:1.2*EI,side:THREE.DoubleSide});
+M.blueGlow=new THREE.MeshStandardMaterial({color:0x061224,emissive:0x2e8bff,
+  emissiveIntensity:3.2,roughness:0.4,metalness:0,toneMapped:false});
+M.rubber=new THREE.MeshStandardMaterial({color:0x0e0f11,roughness:0.92,metalness:0,
+  envMapIntensity:0.35*EI});
+M.darkMetal=new THREE.MeshStandardMaterial({color:0x22262d,roughness:0.38,metalness:0.85,
+  envMapIntensity:0.9*EI});
+M.alcantara=new THREE.MeshStandardMaterial({color:0x14161d,roughness:0.96,metalness:0,
+  envMapIntensity:0.3*EI});
+
+/* ══════════════════════════════════════════════════════════
+   车身：核心车体 + 可拆覆盖半壳（车头朝 -Z）
+   ══════════════════════════════════════════════════════════ */
+function ring(o){
+  const hw=o.hw,cy=o.cy,hh=o.hh,exp=o.exp===undefined?2.6:o.exp;
+  const z=o.z||0,n=o.n||48,a0=o.a0===undefined?0:o.a0,a1=o.a1===undefined?360:o.a1;
+  const pts=[],span=(a1-a0)*Math.PI/180,start=a0*Math.PI/180;
+  for(let i=0;i<n;i++){
+    const a=start+(i/(n-1))*span,c=Math.cos(a),s=Math.sin(a),p=2/exp;
+    pts.push(new THREE.Vector3(
+      hw*Math.sign(c)*Math.pow(Math.abs(c),p),
+      cy+hh*Math.sign(s)*Math.pow(Math.abs(s),p), z));
+  }
+  return pts;
+}
+function loftBody(stations,mat,o){
+  o=o||{};
+  const n=o.n||56;
+  const sections=stations.map(s=>ring({hw:s.hw,cy:(s.bot+s.top)/2,hh:(s.top-s.bot)/2,
+    exp:s.exp===undefined?2.6:s.exp,z:s.z,n:n}));
+  const mesh=new THREE.Mesh(loftSections(sections,{closed:true,capStart:!!o.capStart,capEnd:!!o.capEnd}),mat);
+  mesh.castShadow=mesh.receiveShadow=true;return mesh;
+}
+/* 顶盖半壳：只取顶部角度，外扩 offset 扣在核心车体上，形成真实分缝 */
+function loftShell(stations,mat,o){
+  o=o||{};
+  const n=o.n||40,off=o.offset===undefined?0.008:o.offset;
+  const sections=stations.map(s=>ring({hw:s.hw+off,cy:s.split,hh:(s.top-s.split)+off,
+    exp:s.exp===undefined?2.6:s.exp,z:s.z,n:n,a0:-14,a1:194}));
+  const mesh=new THREE.Mesh(loftSections(sections,{closed:false,capStart:true,capEnd:true}),mat.clone());
+  mesh.material.side=THREE.DoubleSide;
+  mesh.castShadow=mesh.receiveShadow=true;return mesh;
+}
+function loftSideShell(stations,side,mat,o){
+  o=o||{};
+  const n=o.n||30,off=o.offset===undefined?0.008:o.offset;
+  const sgn=side==='R'?1:-1,a0=sgn>0?-80:100,a1=sgn>0?80:260;
+  const sections=stations.map(s=>ring({hw:s.hw+off,cy:(s.bot+s.top)/2,hh:(s.top-s.bot)/2+off,
+    exp:s.exp===undefined?2.6:s.exp,z:s.z,n:n,a0:a0,a1:a1}));
+  const mesh=new THREE.Mesh(loftSections(sections,{closed:false,capStart:true,capEnd:true}),mat.clone());
+  mesh.material.side=THREE.DoubleSide;
+  mesh.castShadow=mesh.receiveShadow=true;return mesh;
+}
+const BODY_STATIONS=[
+  {z:-2.64,hw:0.070,bot:0.12,top:0.36,exp:2.2},
+  {z:-2.50,hw:0.095,bot:0.09,top:0.365,exp:2.2},
+  {z:-2.20,hw:0.130,bot:0.075,top:0.375,exp:2.3},
+  {z:-1.90,hw:0.170,bot:0.065,top:0.40,exp:2.4},
+  {z:-1.60,hw:0.235,bot:0.058,top:0.41,exp:2.5},
+  {z:-1.30,hw:0.320,bot:0.052,top:0.425,exp:2.6},
+  {z:-1.05,hw:0.400,bot:0.05,top:0.44,exp:2.6},
+  {z:-0.85,hw:0.400,bot:0.05,top:0.42,exp:2.6},
+  {z:-0.62,hw:0.310,bot:0.05,top:0.315,exp:2.5},
+  {z:-0.35,hw:0.285,bot:0.05,top:0.30,exp:2.4},
+  {z:+0.00,hw:0.285,bot:0.05,top:0.30,exp:2.4},
+  {z:+0.30,hw:0.300,bot:0.05,top:0.33,exp:2.4},
+  {z:+0.50,hw:0.340,bot:0.05,top:0.40,exp:2.5},
+  {z:+0.90,hw:0.335,bot:0.05,top:0.42,exp:2.5},
+  {z:+1.30,hw:0.285,bot:0.06,top:0.40,exp:2.5},
+  {z:+1.70,hw:0.225,bot:0.07,top:0.38,exp:2.4},
+  {z:+2.05,hw:0.175,bot:0.08,top:0.36,exp:2.3},
+  {z:+2.35,hw:0.135,bot:0.10,top:0.335,exp:2.2},
+  {z:+2.50,hw:0.100,bot:0.13,top:0.31,exp:2.2}
+];
+/* 反解车体表面半宽：悬架叉臂车身端据此嵌入曲面 */
+function bodyHalfWidthAt(z,y){
+  const st=BODY_STATIONS;
+  let a=st[0],b=st[st.length-1];
+  if(z<=st[0].z){a=b=st[0];}
+  else if(z>=st[st.length-1].z){a=b=st[st.length-1];}
+  else for(let i=0;i<st.length-1;i++){
+    if(z>=st[i].z&&z<=st[i+1].z){a=st[i];b=st[i+1];break;}
+  }
+  const f=a===b?0:(z-a.z)/(b.z-a.z);
+  const hw=a.hw+(b.hw-a.hw)*f,bot=a.bot+(b.bot-a.bot)*f,top=a.top+(b.top-a.top)*f;
+  const ea=a.exp===undefined?2.6:a.exp,eb=b.exp===undefined?2.6:b.exp;
+  const exp=ea+(eb-ea)*f;
+  const cy=(bot+top)/2,hh=Math.max(1e-4,(top-bot)/2);
+  const sn=clamp((y-cy)/hh,-1,1);
+  return hw*Math.pow(Math.max(0,1-Math.pow(Math.abs(sn),exp)),1/exp);
+}
+function buildCoreBody(){
+  const g=new THREE.Group();g.name='coreBody';
+  g.add(loftBody(BODY_STATIONS,M.blackPaint,{capStart:true,capEnd:true}));
+  const well=new THREE.Mesh(new THREE.CylinderGeometry(0.082,0.082,0.05,32),
+    new THREE.MeshStandardMaterial({color:0x020304,roughness:0.9}));
+  well.rotation.x=Math.PI/2;well.position.set(0,0.235,-2.655);
+  const rim=new THREE.Mesh(new THREE.TorusGeometry(0.088,0.016,12,40),M.jellyBlue);
+  rim.position.set(0,0.235,-2.662);rim.renderOrder=5;
+  g.add(well,rim);
+  return g;
+}
+function buildNoseCover(){
+  const g=new THREE.Group();g.name='noseCover';
+  g.add(loftShell([
+    {z:-2.655,hw:0.068,split:0.36,top:0.50,exp:2.2},
+    {z:-2.50,hw:0.093,split:0.365,top:0.525,exp:2.2},
+    {z:-2.20,hw:0.128,split:0.375,top:0.55,exp:2.3},
+    {z:-1.90,hw:0.168,split:0.40,top:0.575,exp:2.4},
+    {z:-1.60,hw:0.233,split:0.41,top:0.60,exp:2.5},
+    {z:-1.30,hw:0.318,split:0.425,top:0.62,exp:2.6},
+    {z:-1.05,hw:0.398,split:0.44,top:0.63,exp:2.6},
+    {z:-0.85,hw:0.398,split:0.42,top:0.615,exp:2.6}
+  ],M.blackPaint));
+  return g;
+}
+function buildSidepods(){
+  const mk=function(side){
+    const g=new THREE.Group();g.name='sidepod'+side;
+    g.add(loftSideShell([
+      {z:-1.16,hw:0.405,bot:0.07,top:0.50,exp:2.6},
+      {z:-0.90,hw:0.545,bot:0.055,top:0.565,exp:2.7},
+      {z:-0.55,hw:0.585,bot:0.05,top:0.585,exp:2.7},
+      {z:-0.10,hw:0.575,bot:0.05,top:0.60,exp:2.7},
+      {z:+0.30,hw:0.530,bot:0.055,top:0.615,exp:2.6},
+      {z:+0.62,hw:0.460,bot:0.065,top:0.585,exp:2.5},
+      {z:+0.80,hw:0.400,bot:0.08,top:0.545,exp:2.4}
+    ],side,M.blackPaint));
+    const sgn=side==='R'?1:-1;
+    const intake=new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.10,24,1,false),
+      new THREE.MeshStandardMaterial({color:0x04060a,roughness:0.85}));
+    intake.scale.set(1,1,0.72);intake.rotation.z=Math.PI/2;intake.rotation.y=sgn*0.22;
+    intake.position.set(sgn*0.545,0.40,-0.62);
+    const rim=new THREE.Mesh(new THREE.TorusGeometry(0.132,0.010,10,32),M.blueGlow);
+    rim.scale.set(1,1,0.72);rim.rotation.y=Math.PI/2+sgn*0.22;
+    rim.position.set(sgn*0.556,0.40,-0.62);
+    g.add(intake,rim);
+    const curve=new THREE.CatmullRomCurve3([
+      V3(sgn*0.44,0.135,-1.10),V3(sgn*0.565,0.12,-0.70),V3(sgn*0.575,0.115,-0.15),
+      V3(sgn*0.52,0.12,0.35),V3(sgn*0.44,0.135,0.70)]);
+    g.add(new THREE.Mesh(new THREE.TubeGeometry(curve,24,0.0075,8),M.blueGlow));
+    // 侧箱 MOONSHOT 贴花
+    const d=new THREE.Mesh(new THREE.PlaneGeometry(0.52,0.076),
+      new THREE.MeshStandardMaterial({map:moonshotDecal(1024,150),transparent:true,
+        depthWrite:false,roughness:0.3,metalness:0,polygonOffset:true,polygonOffsetFactor:-2}));
+    d.position.set(sgn*0.585,0.47,0.02);d.rotation.y=sgn*Math.PI/2;d.rotation.x=-0.06;
+    d.renderOrder=6;g.add(d);
+    return g;
+  };
+  return [mk('R'),mk('L')];
+}
+function buildEngineCover(){
+  const g=new THREE.Group();g.name='engineCover';
+  g.add(loftShell([
+    {z:+0.30,hw:0.295,split:0.335,top:0.55,exp:2.4},
+    {z:+0.48,hw:0.345,split:0.40,top:0.66,exp:2.5},
+    {z:+0.80,hw:0.345,split:0.42,top:0.735,exp:2.5},
+    {z:+1.15,hw:0.310,split:0.415,top:0.72,exp:2.5},
+    {z:+1.55,hw:0.250,split:0.395,top:0.66,exp:2.4},
+    {z:+1.90,hw:0.200,split:0.375,top:0.58,exp:2.3},
+    {z:+2.20,hw:0.155,split:0.35,top:0.50,exp:2.2},
+    {z:+2.42,hw:0.120,split:0.33,top:0.42,exp:2.2}
+  ],M.blackPaint));
+  // 鲨鱼背鳍：侧轮廓挤出 + 倒角
+  const f=new THREE.Shape();
+  f.moveTo(-0.05,0.0);
+  f.quadraticCurveTo(0.22,0.30,0.42,0.44);
+  f.quadraticCurveTo(0.60,0.50,0.85,0.42);
+  f.quadraticCurveTo(1.35,0.26,1.80,0.06);
+  f.lineTo(1.86,-0.04);f.lineTo(0.0,-0.06);f.closePath();
+  const fg=new THREE.ExtrudeGeometry(f,{depth:0.032,bevelEnabled:true,bevelThickness:0.008,
+    bevelSize:0.008,bevelSegments:2,curveSegments:24});
+  fg.translate(0,0,-0.016);
+  const fin=new THREE.Mesh(fg,M.carbon);
+  fin.rotation.y=-Math.PI/2;fin.position.set(0,0.60,0.32);
+  fin.castShadow=true;g.add(fin);
+  return g;
+}
+
+/* ══════════ 空力套件 ══════════ */
+function wingLoft(stations,mat,n){
+  const base=airfoilRing({chord:1,thick:0.1,n:n||30});
+  const sections=stations.map(function(s){
+    const tw=(s.twist||0)*Math.PI/180,cos=Math.cos(tw),sin=Math.sin(tw);
+    return base.map(function(p){
+      const ax=p.x*s.chord,ayx=p.y*(s.thick===undefined?0.1:s.thick)*s.chord*10;
+      const rx=ax*cos-ayx*sin,ry=ax*sin+ayx*cos;
+      return V3(s.x,s.y+ry,s.z-rx);
+    });
+  });
+  const m=new THREE.Mesh(loftSections(sections,{closed:true,capStart:true,capEnd:true}),mat);
+  m.castShadow=m.receiveShadow=true;return m;
+}
+const withWing=(arr,chord,thick,twist)=>arr.map(s=>({x:s.x,y:s.y,z:s.z,chord:chord,thick:thick,twist:twist}));
+function buildFrontWing(){
+  const g=new THREE.Group();g.name='frontWing';
+  g.add(wingLoft(withWing([
+    {x:-1.02,y:0.32,z:-1.90},{x:-0.92,y:0.21,z:-1.99},{x:-0.75,y:0.14,z:-2.09},
+    {x:-0.50,y:0.105,z:-2.16},{x:-0.25,y:0.095,z:-2.19},{x:0,y:0.095,z:-2.19},
+    {x:0.25,y:0.095,z:-2.19},{x:0.50,y:0.105,z:-2.16},{x:0.75,y:0.14,z:-2.09},
+    {x:0.92,y:0.21,z:-1.99},{x:1.02,y:0.32,z:-1.90}],0.46,0.07,-7),M.whitePaint));
+  g.add(wingLoft(withWing([
+    {x:-0.82,y:0.30,z:-2.02},{x:-0.50,y:0.25,z:-2.15},{x:-0.20,y:0.245,z:-2.20},
+    {x:0.20,y:0.245,z:-2.20},{x:0.50,y:0.25,z:-2.15},{x:0.82,y:0.30,z:-2.02}],
+    0.30,0.10,-13),M.whitePaint));
+  [1,-1].forEach(function(sgn){
+    const horn=new THREE.Mesh(sweepRibbon([
+      V3(sgn*0.95,0.30,-2.06),V3(sgn*1.03,0.44,-1.92),
+      V3(sgn*1.055,0.58,-1.72),V3(sgn*1.00,0.665,-1.50)],
+      {widthAt:t=>0.20-0.10*t,thickAt:()=>0.018,segs:14}),M.whitePaint);
+    horn.castShadow=true;g.add(horn);
+    const ep=new THREE.Mesh(sweepRibbon([
+      V3(sgn*1.045,0.10,-2.32),V3(sgn*1.055,0.20,-2.12),V3(sgn*1.045,0.30,-1.93)],
+      {widthAt:()=>0.36,thickAt:()=>0.012,segs:10}),M.whitePaint);
+    ep.castShadow=true;g.add(ep);
+    const py=new THREE.Mesh(new THREE.BoxGeometry(0.022,0.20,0.30),M.carbon);
+    py.position.set(sgn*0.10,0.30,-2.30);py.rotation.x=0.18;py.castShadow=true;g.add(py);
+  });
+  return g;
+}
+function buildRearWing(){
+  const g=new THREE.Group();g.name='rearWing';
+  const mainStations=withWing([
+    {x:-0.78,y:0.875,z:2.16},{x:-0.55,y:0.892,z:2.09},{x:-0.30,y:0.898,z:2.065},
+    {x:0,y:0.90,z:2.06},{x:0.30,y:0.898,z:2.065},{x:0.55,y:0.892,z:2.09},
+    {x:0.78,y:0.875,z:2.16}],0.40,0.10,5);
+  const main=wingLoft(mainStations,M.jellyBlue);main.renderOrder=4;g.add(main);
+  // 后唇广告板：MOONSHOT 直接贴在几何体上（重算 UV，否则字被拉成竖条）
+  const lipTex=canvasTexture(2048,256,function(cv,w,h){
+    cv.fillStyle='#07080b';cv.fillRect(0,0,w,h);
+    cv.fillStyle='#f4f7fc';cv.textAlign='center';cv.textBaseline='middle';
+    cv.font='italic 900 150px '+FONT;
+    cv.fillText('MOONSHOT',w/2,h/2+8);
+  });
+  const lipSections=mainStations.map(function(s){
+    const zTE=s.z+0.20*Math.cos(5*Math.PI/180)-0.004;
+    const yTE=s.y-0.20*Math.sin(5*Math.PI/180);
+    return [V3(s.x,yTE-0.135,zTE+0.028),V3(s.x,yTE+0.020,zTE+0.004)];
+  });
+  const lipGeo=loftSections(lipSections,{closed:false,capStart:true,capEnd:true});
+  const lu=lipGeo.getAttribute('uv'),lp=lipGeo.getAttribute('position');
+  const lipBody=lipSections.length*2;
+  for(let i=0;i<lu.count;i++){
+    lu.setXY(i,(lp.getX(i)+0.78)/1.56,i<lipBody?(i%2):0.5);
+  }
+  const lip=new THREE.Mesh(lipGeo,new THREE.MeshPhysicalMaterial({map:lipTex,color:0xffffff,
+    metalness:0.2,roughness:0.18,clearcoat:0.8,clearcoatRoughness:0.08,side:THREE.DoubleSide,
+    envMapIntensity:EI}));
+  lip.castShadow=true;g.add(lip);
+  [1,-1].forEach(function(sgn){
+    const ep=new THREE.Mesh(sweepRibbon([
+      V3(sgn*0.80,0.93,1.94),V3(sgn*0.875,0.80,2.05),V3(sgn*0.895,0.60,2.11),
+      V3(sgn*0.875,0.42,2.07),V3(sgn*0.83,0.315,1.90)],
+      {widthAt:t=>0.36-0.14*t,thickAt:()=>0.022,segs:16}),M.jellyBlue);
+    ep.castShadow=true;ep.renderOrder=4;g.add(ep);
+    const mount=new THREE.Mesh(sweepRibbon([
+      V3(sgn*0.14,0.615,1.68),V3(sgn*0.15,0.78,1.86),V3(sgn*0.15,0.875,2.03)],
+      {widthAt:()=>0.20,thickAt:()=>0.02,segs:12}),M.carbon);
+    mount.castShadow=true;g.add(mount);
+  });
+  const beam=wingLoft(withWing([
+    {x:-0.55,y:0.71,z:2.10},{x:-0.25,y:0.72,z:2.055},{x:0,y:0.722,z:2.045},
+    {x:0.25,y:0.72,z:2.055},{x:0.55,y:0.71,z:2.10}],0.20,0.12,7),M.jellyBlue);
+  beam.renderOrder=4;g.add(beam);
+  return g;
+}
+function buildHalo(){
+  const g=new THREE.Group();g.name='halo';
+  const curve=new THREE.CatmullRomCurve3([
+    V3(0,0.545,-1.06),V3(0,0.85,-0.66),V3(0,0.965,-0.12),V3(0,0.915,0.28),V3(0,0.68,0.52)]);
+  const h=new THREE.Mesh(new THREE.TubeGeometry(curve,40,0.042,12),M.blackPaint);
+  h.scale.set(1.25,0.72,1);h.castShadow=true;g.add(h);
+  const loop=new THREE.Mesh(new THREE.TorusGeometry(0.185,0.020,12,48),M.jellyBlue);
+  loop.position.set(0,0.755,-0.72);loop.rotation.x=-0.72;loop.renderOrder=4;g.add(loop);
+  [1,-1].forEach(function(sgn){
+    const ws=new THREE.Mesh(sweepRibbon([
+      V3(sgn*0.16,0.38,-0.86),V3(sgn*0.27,0.52,-0.58),V3(sgn*0.26,0.565,-0.28)],
+      {widthAt:t=>0.17-0.05*t,thickAt:()=>0.012,segs:12}),M.jellyBlue);
+    ws.renderOrder=4;g.add(ws);
+  });
+  return g;
+}
+function buildBargeboards(){
+  const mk=function(sgn){
+    const g=new THREE.Group();g.name='barge'+(sgn>0?'R':'L');
+    const v=new THREE.Mesh(sweepRibbon([
+      V3(sgn*0.655,0.10,-1.38),V3(sgn*0.685,0.30,-1.30),V3(sgn*0.645,0.50,-1.18)],
+      {widthAt:t=>0.19-0.06*t,thickAt:()=>0.014,segs:12}),M.jellyBlue);
+    v.castShadow=true;v.renderOrder=4;g.add(v);
+    return g;
+  };
+  return [mk(1),mk(-1)];
+}
+
+/* ══════════ 车轮与悬架 ══════════ */
+function tireGeometry(radius,width){
+  const w=width/2;
+  const profile=[[0.60,-1],[0.80,-0.98],[0.905,-0.90],[0.955,-0.72],[0.985,-0.45],[1.0,-0.14],
+    [1.0,0.14],[0.985,0.45],[0.955,0.72],[0.905,0.90],[0.80,0.98],[0.60,1]]
+    .map(p=>new THREE.Vector2(radius*p[0],w*p[1]));
+  const geo=new THREE.LatheGeometry(profile,56);
+  geo.rotateZ(Math.PI/2);
+  return geo;
+}
+function buildWheel(radius,width,side){
+  const g=new THREE.Group();
+  const spinner=new THREE.Group();spinner.name='spinner';g.add(spinner);
+  const sgn=side==='R'?1:-1;
+  const tire=new THREE.Mesh(tireGeometry(radius,width),M.rubber);
+  tire.castShadow=tire.receiveShadow=true;spinner.add(tire);
+  const cover=new THREE.Mesh(new THREE.CircleGeometry(radius*0.585,48),
+    new THREE.MeshPhysicalMaterial({map:turbineTexture(),color:0xffffff,roughness:0.35,
+      metalness:0.3,clearcoat:0.7,clearcoatRoughness:0.15,envMapIntensity:EI}));
+  cover.position.set(sgn*(width/2+0.002),0,0);cover.rotation.y=sgn*Math.PI/2;
+  spinner.add(cover);
+  const back=new THREE.Mesh(new THREE.CircleGeometry(radius*0.585,32),
+    new THREE.MeshStandardMaterial({color:0x0a0c10,roughness:0.8}));
+  back.position.set(sgn*(width/2-0.02),0,0);back.rotation.y=sgn*Math.PI/2;spinner.add(back);
+  const glowRing=new THREE.Mesh(new THREE.TorusGeometry(radius*0.60,0.0075,10,56),M.blueGlow.clone());
+  glowRing.material.emissiveIntensity=3.4;
+  glowRing.position.set(sgn*(width/2+0.006),0,0);glowRing.rotation.y=Math.PI/2;
+  spinner.add(glowRing);g.userData.glowRing=glowRing;
+  const nut=new THREE.Mesh(new THREE.CylinderGeometry(0.028,0.028,0.02,12),M.darkMetal);
+  nut.rotation.z=Math.PI/2;nut.position.set(sgn*(width/2+0.008),0,0);
+  const dot=new THREE.Mesh(new THREE.SphereGeometry(0.012,12,8),
+    new THREE.MeshStandardMaterial({color:0x111111,emissive:0x2e8bff,emissiveIntensity:2.2,
+      toneMapped:false}));
+  dot.position.set(sgn*(width/2+0.018),0,0);
+  spinner.add(nut,dot);
+  const bc=barcodeTexture();
+  [Math.PI/2,-Math.PI/2].forEach(function(a){
+    const st=new THREE.Mesh(new THREE.PlaneGeometry(0.085,0.032),
+      new THREE.MeshStandardMaterial({map:bc,roughness:0.6,polygonOffset:true,polygonOffsetFactor:-1}));
+    st.position.set(sgn*(width/2+0.001),Math.sin(a)*radius*0.905,0);
+    st.rotation.y=sgn*Math.PI/2;spinner.add(st);
+  });
+  g.userData.spinner=spinner;
+  return g;
+}
+function buildSuspension(c){
+  const g=new THREE.Group();
+  const sx=c.sx,axleZ=c.axleZ,width=c.width,wheelY=c.wheelY;
+  const trackHalf=(axleZ<0?0.83:0.86)+width/2;
+  const L=(wx,wy,wz)=>V3(wx-sx*trackHalf,wy-wheelY,wz-axleZ);
+  const pk=(z,y,embed)=>sx*Math.max(0.06,bodyHalfWidthAt(z,y)-(embed===undefined?0.025:embed));
+  const upY=axleZ<0?0.335:0.35,loY=axleZ<0?0.145:0.16;
+  const xUp=sx*(trackHalf-0.15),arm=M.carbon;
+  g.add(tubeBetween(L(pk(axleZ-0.27,upY),upY,axleZ-0.27),L(xUp,wheelY+0.10,axleZ-0.03),0.012,arm));
+  g.add(tubeBetween(L(pk(axleZ+0.27,upY),upY,axleZ+0.27),L(xUp,wheelY+0.10,axleZ+0.03),0.012,arm));
+  g.add(tubeBetween(L(pk(axleZ-0.29,loY),loY,axleZ-0.29),L(xUp,wheelY-0.085,axleZ-0.03),0.014,arm));
+  g.add(tubeBetween(L(pk(axleZ+0.29,loY),loY,axleZ+0.29),L(xUp,wheelY-0.085,axleZ+0.03),0.014,arm));
+  g.add(tubeBetween(L(pk(axleZ+0.22,0.20),0.20,axleZ+0.22),L(xUp,wheelY+0.005,axleZ+0.06),0.009,arm));
+  g.add(tubeBetween(L(xUp,wheelY-0.10,axleZ),L(xUp,wheelY+0.115,axleZ),0.017,M.darkMetal));
+  return g;
+}
+function buildWheels(){
+  return [
+    {name:'FL',sx:-1,axleZ:-1.75,radius:0.34,width:0.36,wheelY:0.34},
+    {name:'FR',sx:1,axleZ:-1.75,radius:0.34,width:0.36,wheelY:0.34},
+    {name:'RL',sx:-1,axleZ:1.45,radius:0.37,width:0.42,wheelY:0.37},
+    {name:'RR',sx:1,axleZ:1.45,radius:0.37,width:0.42,wheelY:0.37}
+  ].map(function(c){
+    const group=new THREE.Group();group.name='wheel'+c.name;
+    const wheel=buildWheel(c.radius,c.width,c.sx>0?'R':'L');
+    group.add(wheel,buildSuspension(c));
+    group.userData.spinner=wheel.userData.spinner;
+    group.userData.glowRing=wheel.userData.glowRing;
+    const trackHalf=(c.axleZ<0?0.83:0.86)+c.width/2;
+    group.position.set(c.sx*trackHalf,c.wheelY,c.axleZ);
+    return group;
+  });
+}
+
+/* ══════════ 内构（覆盖件抬走后可见） ══════════ */
+function buildTub(){
+  const g=new THREE.Group();g.name='tub';
+  const stations=[
+    {z:-0.78,hw:0.24,fl:0.16,rim:0.315},{z:-0.50,hw:0.265,fl:0.10,rim:0.305},
+    {z:-0.10,hw:0.265,fl:0.085,rim:0.30},{z:+0.30,hw:0.27,fl:0.10,rim:0.335},
+    {z:+0.52,hw:0.26,fl:0.20,rim:0.41}];
+  const n=26;
+  const sections=stations.map(function(s){
+    const pts=[],cy=(s.fl+s.rim)/2,hh=(s.rim-s.fl)/2;
+    for(let i=0;i<n;i++){
+      const a=Math.PI+(i/(n-1))*Math.PI;
+      pts.push(V3(s.hw*Math.cos(a),cy+hh*Math.sin(a),s.z));
+    }
+    return pts;
+  });
+  const m=new THREE.Mesh(loftSections(sections,{closed:false}),M.alcantara);
+  m.material.side=THREE.DoubleSide;m.receiveShadow=true;g.add(m);
+  return g;
+}
+function buildCockpit(){
+  const g=new THREE.Group();g.name='cockpit';
+  const seat=new THREE.Mesh(new THREE.BoxGeometry(0.34,0.30,0.52),M.alcantara);
+  seat.position.set(0,0.24,0.12);g.add(seat);
+  const back=new THREE.Mesh(new THREE.BoxGeometry(0.34,0.34,0.10),M.alcantara);
+  back.position.set(0,0.36,0.40);back.rotation.x=-0.22;g.add(back);
+  const wheel=new THREE.Mesh(new THREE.TorusGeometry(0.10,0.016,10,28,Math.PI*1.3),M.darkMetal);
+  wheel.position.set(0,0.40,-0.30);wheel.rotation.x=-1.05;wheel.rotation.z=Math.PI*0.35;g.add(wheel);
+  const hud=new THREE.Mesh(new THREE.PlaneGeometry(0.16,0.05),
+    new THREE.MeshStandardMaterial({color:0x04101f,emissive:0x2e8bff,emissiveIntensity:1.4,
+      toneMapped:false}));
+  hud.position.set(0,0.45,-0.36);hud.rotation.x=-0.5;g.add(hud);
+  return g;
+}
+function buildBattery(){
+  const g=new THREE.Group();g.name='battery';
+  const box=new THREE.Mesh(new THREE.BoxGeometry(0.52,0.18,1.45),M.darkMetal);
+  box.position.set(0,0.16,0.55);box.castShadow=true;g.add(box);
+  for(let i=-2;i<=2;i++){
+    const cell=new THREE.Mesh(new THREE.BoxGeometry(0.53,0.022,0.20),
+      new THREE.MeshStandardMaterial({color:0x081026,emissive:0x2e8bff,
+        emissiveIntensity:1.1,toneMapped:false}));
+    cell.position.set(0,0.25,0.55+i*0.26);g.add(cell);
+  }
+  return g;
+}
+function buildMotors(){
+  const g=new THREE.Group();g.name='motors';
+  [1,-1].forEach(function(sgn){
+    const m=new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.13,0.24,24),M.darkMetal);
+    m.rotation.z=Math.PI/2;m.position.set(sgn*0.20,0.30,1.45);m.castShadow=true;g.add(m);
+    const r=new THREE.Mesh(new THREE.TorusGeometry(0.135,0.012,10,26),M.blueGlow);
+    r.rotation.y=Math.PI/2;r.position.set(sgn*0.33,0.30,1.45);g.add(r);
+    g.add(tubeBetween(V3(sgn*0.33,0.30,1.45),V3(sgn*0.85,0.34,1.45),0.030,M.darkMetal));
+  });
+  return g;
+}
+function buildFloor(){
+  const g=new THREE.Group();g.name='floor';
+  const plate=new THREE.Mesh(new THREE.BoxGeometry(1.24,0.018,4.35),M.carbon);
+  plate.position.set(0,0.052,0.05);plate.receiveShadow=true;g.add(plate);
+  [1,-1].forEach(function(sgn){
+    const sk=new THREE.Mesh(new THREE.BoxGeometry(0.07,0.02,2.7),M.whitePaint);
+    sk.position.set(sgn*0.615,0.062,-0.35);sk.rotation.y=sgn*-0.03;sk.castShadow=true;g.add(sk);
+    const fl=new THREE.Mesh(new THREE.BoxGeometry(0.09,0.014,0.3),M.whitePaint);
+    fl.position.set(sgn*0.62,0.09,-1.55);fl.rotation.z=sgn*0.35;g.add(fl);
+  });
+  const dm=new THREE.MeshStandardMaterial({color:0x0c0e12,roughness:0.72,metalness:0.15,
+    envMapIntensity:0.3*EI});
+  const ramp=new THREE.Mesh(new THREE.BoxGeometry(0.96,0.014,0.72),dm);
+  ramp.position.set(0,0.16,2.28);ramp.rotation.x=-0.28;g.add(ramp);
+  for(let i=-2;i<=2;i++){
+    const s=new THREE.Mesh(new THREE.BoxGeometry(0.008,0.16,0.62),dm);
+    s.position.set(i*0.19,0.15,2.28);s.rotation.x=-0.28;s.rotation.z=i*0.05;g.add(s);
+  }
+  const lipW=new THREE.Mesh(new THREE.BoxGeometry(0.98,0.028,0.07),dm);
+  lipW.position.set(0,0.255,2.47);lipW.rotation.x=-0.12;g.add(lipW);
+  const tail=new THREE.Mesh(new THREE.TorusGeometry(0.055,0.012,10,32),M.blueGlow.clone());
+  tail.material.emissiveIntensity=3.6;
+  tail.position.set(0,0.33,2.505);tail.name='tailRing';g.add(tail);
+  return g;
+}
+function buildRadiators(){
+  const g=new THREE.Group();g.name='radiators';
+  [1,-1].forEach(function(sgn){
+    const r=new THREE.Mesh(new THREE.BoxGeometry(0.05,0.26,0.72),
+      new THREE.MeshStandardMaterial({color:0x101a2c,emissive:0x14407f,emissiveIntensity:0.5,
+        roughness:0.6,metalness:0.4}));
+    r.position.set(sgn*0.45,0.32,-0.45);r.rotation.y=sgn*0.18;g.add(r);
+  });
+  return g;
+}
+
+/* ══════════ 影棚环境（PMREM）：暗夜 / 浅色两套 ══════════ */
+function strip(w,h,color,inten){
+  return new THREE.Mesh(new THREE.PlaneGeometry(w,h),
+    new THREE.MeshBasicMaterial({color:new THREE.Color(color).convertSRGBToLinear().multiplyScalar(inten)}));
+}
+function buildStudioEnv(){
+  const env=new THREE.Scene();
+  env.add(new THREE.Mesh(new THREE.BoxGeometry(30,14,30),
+    new THREE.MeshBasicMaterial({color:0x040405,side:THREE.BackSide})));
+  [-4,0,4].forEach(function(z){                       // 顶部三条冷白长灯箱
+    const s=strip(16,1.6,0xf2f6ff,9);
+    s.position.set(0,6.8,z);s.rotation.x=Math.PI/2;env.add(s);
+  });
+  [1,-1].forEach(function(sgn){                       // 两侧蓝灯带
+    const b=strip(10,1.1,0x2e8bff,5);
+    b.position.set(sgn*14,2.2,0);b.rotation.y=-sgn*Math.PI/2;env.add(b);
+  });
+  const c=strip(8,0.6,0x59c2ff,3.5);c.position.set(0,0.9,-14);env.add(c);
+  return env;
+}
+function buildStudioEnvLight(){
+  const env=new THREE.Scene();
+  env.add(new THREE.Mesh(new THREE.BoxGeometry(30,14,30),
+    new THREE.MeshBasicMaterial({color:0xd8dde5,side:THREE.BackSide})));
+  [-4.5,0,4.5].forEach(function(z){
+    const s=strip(14,5,0xffffff,4.2);
+    s.position.set(0,6.8,z);s.rotation.x=Math.PI/2;env.add(s);
+  });
+  [1,-1].forEach(function(sgn){
+    const b=strip(12,4.5,0xf6f9ff,2.2);
+    b.position.set(sgn*14,3,0);b.rotation.y=-sgn*Math.PI/2;env.add(b);
+    const c=strip(9,0.9,0xbfdcff,1.6);
+    c.position.set(sgn*13,0.7,sgn*6);c.rotation.y=-sgn*Math.PI/2;env.add(c);
+  });
+  return env;
+}
+
+/* ══════════ 悬浮立方展厅 ══════════
+   一个边长 6.4 的方形取景框浮在轨道上：金属边梁 + 蓝色发光棱线 +
+   菲涅尔玻璃面（正视几乎透明、掠视才亮起），内部悬一块圆形展台承接投影。 */
+const CUBE=6.4, CUBE_H=CUBE/2;
+const CUBE_C=new THREE.Vector3(0,0.72,-0.075);
+const rig=new THREE.Group();rig.name='rig';scene.add(rig);
+const stageGrp=new THREE.Group();stageGrp.name='stage';
+stageGrp.position.copy(CUBE_C);
+rig.add(stageGrp);
+
+/* ---- 边梁与棱线 ---- */
+const beamMat=new THREE.MeshPhysicalMaterial({color:0x1b212b,metalness:0.92,roughness:0.18,
+  clearcoat:0.6,envMapIntensity:1.4*EI});
+const edgeGlowMat=new THREE.MeshStandardMaterial({color:0x061224,emissive:0x2e8bff,
+  emissiveIntensity:3.0,roughness:0.4,toneMapped:false});
+const BW=0.055;                       // 边梁截面
+function edgeBar(axis,sy,sz2){
+  const g=new THREE.Group();
+  const len=CUBE+BW;
+  const dim=axis==='x'?[len,BW,BW]:axis==='y'?[BW,len,BW]:[BW,BW,len];
+  const bar=new THREE.Mesh(new THREE.BoxGeometry(dim[0],dim[1],dim[2]),beamMat);
+  bar.castShadow=true;g.add(bar);
+  // 棱线内侧的发光细条
+  const gd=axis==='x'?[CUBE*0.96,0.012,0.012]:axis==='y'?[0.012,CUBE*0.96,0.012]:[0.012,0.012,CUBE*0.96];
+  const gl=new THREE.Mesh(new THREE.BoxGeometry(gd[0],gd[1],gd[2]),edgeGlowMat);
+  const off=BW*0.55;
+  if(axis==='x')gl.position.set(0,-sy*off,-sz2*off);
+  if(axis==='y')gl.position.set(-sy*off,0,-sz2*off);
+  if(axis==='z')gl.position.set(-sy*off,-sz2*off,0);
+  g.add(gl);
+  return g;
+}
+[[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(p){
+  const a=edgeBar('x',p[0],p[1]);a.position.set(0,p[0]*CUBE_H,p[1]*CUBE_H);stageGrp.add(a);
+  const b=edgeBar('y',p[0],p[1]);b.position.set(p[0]*CUBE_H,0,p[1]*CUBE_H);stageGrp.add(b);
+  const c=edgeBar('z',p[0],p[1]);c.position.set(p[0]*CUBE_H,p[1]*CUBE_H,0);stageGrp.add(c);
+});
+/* 八个角节点 */
+[-1,1].forEach(function(i){[-1,1].forEach(function(j){[-1,1].forEach(function(k){
+  const n=new THREE.Mesh(new THREE.BoxGeometry(0.14,0.14,0.14),beamMat);
+  n.position.set(i*CUBE_H,j*CUBE_H,k*CUBE_H);n.castShadow=true;stageGrp.add(n);
+})})});
+
+/* ---- 菲涅尔玻璃面 ---- */
+const paneUni={uCol:{value:new THREE.Color(0x4f9dff)},uInt:{value:0.55},
+  uBase:{value:0.012},uGrid:{value:0.10}};
+const paneMat=new THREE.ShaderMaterial({
+  uniforms:paneUni,transparent:true,depthWrite:false,side:THREE.DoubleSide,
+  blending:THREE.AdditiveBlending,
+  vertexShader:'varying vec3 vN;varying vec3 vP;varying vec2 vUv;'+
+    'void main(){vN=normalize(normalMatrix*normal);vUv=uv;'+
+    'vec4 mv=modelViewMatrix*vec4(position,1.0);vP=mv.xyz;gl_Position=projectionMatrix*mv;}',
+  fragmentShader:'uniform vec3 uCol;uniform float uInt;uniform float uBase;uniform float uGrid;'+
+    'varying vec3 vN;varying vec3 vP;varying vec2 vUv;'+
+    'void main(){float f=pow(1.0-abs(dot(normalize(vN),normalize(-vP))),2.6);'+
+    'vec2 g=abs(fract(vUv*8.0)-0.5);'+
+    'float line=(1.0-smoothstep(0.0,0.035,min(g.x,g.y)))*uGrid;'+
+    'float a=f*uInt+line*(0.25+f)+uBase;'+
+    'gl_FragColor=vec4(uCol*a*1.6,a);}'});
+paneUni.uCol.value.convertSRGBToLinear();
+const paneGeo=new THREE.PlaneGeometry(CUBE,CUBE);
+const panes=[];
+[[0,0,CUBE_H,0,0],[0,0,-CUBE_H,0,Math.PI],
+ [CUBE_H,0,0,0,Math.PI/2],[-CUBE_H,0,0,0,-Math.PI/2],
+ [0,CUBE_H,0,-Math.PI/2,0],[0,-CUBE_H,0,Math.PI/2,0]].forEach(function(p){
+  const m=new THREE.Mesh(paneGeo,paneMat);
+  m.position.set(p[0],p[1],p[2]);m.rotation.set(p[3],p[4],0);
+  m.renderOrder=2;stageGrp.add(m);panes.push(m);
+});
+
+/* ---- 内部圆形展台（承接投影） ---- */
+const platform=new THREE.Mesh(new THREE.CylinderGeometry(2.78,2.72,0.12,96),
+  new THREE.MeshPhysicalMaterial({map:platformTexture(),color:0xffffff,roughness:0.22,
+    metalness:0.75,clearcoat:0.5,clearcoatRoughness:0.12,envMapIntensity:1.1*EI}));
+platform.position.set(0,-0.17-CUBE_C.y,0);
+platform.receiveShadow=true;stageGrp.add(platform);
+const neonRing=new THREE.Mesh(new THREE.TorusGeometry(2.80,0.028,12,128),
+  new THREE.MeshStandardMaterial({color:0x061224,emissive:0x2e8bff,emissiveIntensity:4.2,
+    roughness:0.4,toneMapped:false}));
+neonRing.rotation.x=Math.PI/2;neonRing.position.set(0,-0.10-CUBE_C.y,0);stageGrp.add(neonRing);
+const innerRing=new THREE.Mesh(new THREE.TorusGeometry(2.05,0.010,8,96),
+  new THREE.MeshStandardMaterial({color:0x061224,emissive:0x59c2ff,emissiveIntensity:1.6,
+    roughness:0.4,toneMapped:false}));
+innerRing.rotation.x=Math.PI/2;innerRing.position.set(0,-0.105-CUBE_C.y,0);stageGrp.add(innerRing);
+/* 展台与立方底面之间的四根吊索 */
+[[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(p){
+  const a=new THREE.Vector3(p[0]*1.95,-0.23-CUBE_C.y,p[1]*1.95);
+  const b=new THREE.Vector3(p[0]*CUBE_H*0.97,-CUBE_H,p[1]*CUBE_H*0.97);
+  stageGrp.add(tubeBetween(a,b,0.012,beamMat,8));
+});
+/* 展台下方的蓝色光晕 */
+const pool=new THREE.Mesh(new THREE.CircleGeometry(2.6,64),
+  new THREE.MeshBasicMaterial({color:0x1d5fd0,transparent:true,opacity:0.16,
+    blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false}));
+pool.rotation.x=Math.PI/2;pool.position.set(0,-0.30-CUBE_C.y,0);stageGrp.add(pool);
+
+/* ══════════ 太空背景：星场 + 远景地球 ══════════ */
+(function(){
+  const n=5200,pos=new Float32Array(n*3),col=new Float32Array(n*3),sz=new Float32Array(n);
+  const c=new THREE.Color();
+  for(let i=0;i<n;i++){
+    const r=620+rand()*420,th=rand()*Math.PI*2,ph=Math.acos(2*rand()-1);
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.cos(ph);
+    pos[i*3+2]=r*Math.sin(ph)*Math.sin(th);
+    c.setHSL(0.58+(rand()-0.5)*0.14,0.4*rand(),0.35+0.6*Math.pow(rand(),3));
+    col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;
+    sz[i]=0.9+Math.pow(rand(),7)*7;
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color',new THREE.BufferAttribute(col,3));
+  g.setAttribute('aSize',new THREE.BufferAttribute(sz,1));
+  const m=new THREE.ShaderMaterial({
+    uniforms:{uPix:{value:renderer.getPixelRatio()},uFade:{value:1}},
+    vertexShader:'attribute float aSize;varying vec3 vC;uniform float uPix;'+
+      'void main(){vC=color;vec4 mv=modelViewMatrix*vec4(position,1.0);'+
+      'gl_PointSize=aSize*uPix*(300.0/max(1.0,-mv.z));gl_Position=projectionMatrix*mv;}',
+    fragmentShader:'varying vec3 vC;uniform float uFade;void main(){vec2 d=gl_PointCoord-0.5;'+
+      'float a=smoothstep(0.5,0.04,length(d));gl_FragColor=vec4(vC*1.5,a*a*uFade);}',
+    transparent:true,depthWrite:false,vertexColors:true,blending:THREE.AdditiveBlending});
+  window.__starMat=m;
+  scene.add(new THREE.Points(g,m));
+})();
+const earthGrp=new THREE.Group();
+(function(){
+  const tex=canvasTexture(2048,1024,function(x,w,h){
+    const og=x.createLinearGradient(0,0,0,h);
+    og.addColorStop(0,'#0a2a58');og.addColorStop(.5,'#0e4488');og.addColorStop(1,'#08214a');
+    x.fillStyle=og;x.fillRect(0,0,w,h);
+    function blob(cx,cy,r,seed){
+      x.beginPath();
+      for(let a=0;a<=Math.PI*2+0.01;a+=0.1){
+        const k=r*(0.6+0.4*Math.abs(Math.sin(a*2.3+seed)+0.5*Math.sin(a*4.7+seed*2))/1.5);
+        const px=cx+Math.cos(a)*k*1.5,py=cy+Math.sin(a)*k;
+        a===0?x.moveTo(px,py):x.lineTo(px,py);
+      }
+      x.closePath();x.fill();
+    }
+    x.fillStyle='#1e6044';
+    blob(430,360,140,1);blob(560,620,175,2.4);blob(1180,330,190,3.1);
+    blob(1320,600,120,4.6);blob(1640,700,140,5.2);blob(900,250,90,6.1);
+    x.fillStyle='rgba(150,160,115,0.32)';blob(1180,330,150,3.1);
+    x.fillStyle='rgba(236,246,255,0.88)';x.fillRect(0,0,w,44);x.fillRect(0,h-44,w,44);
+    x.globalAlpha=.5;x.fillStyle='#fff';
+    for(let i=0;i<180;i++){
+      x.beginPath();
+      x.ellipse(rand()*w,90+rand()*(h-180),(22+rand()*90)*2.2,(22+rand()*90)*0.48,
+        rand()*.5-.25,0,Math.PI*2);
+      x.fill();
+    }
+    x.globalAlpha=1;
+  });
+  const globe=new THREE.Mesh(new THREE.SphereGeometry(34,64,44),
+    new THREE.MeshStandardMaterial({map:tex,roughness:.94,metalness:.02,
+      emissive:0x07132c,emissiveIntensity:.5}));
+  earthGrp.add(globe);earthGrp.userData.globe=globe;
+  const atmo=new THREE.Mesh(new THREE.SphereGeometry(36.4,48,32),new THREE.ShaderMaterial({
+    vertexShader:'varying vec3 vN;varying vec3 vP;void main(){vN=normalize(normalMatrix*normal);'+
+      'vec4 mv=modelViewMatrix*vec4(position,1.0);vP=mv.xyz;gl_Position=projectionMatrix*mv;}',
+    fragmentShader:'varying vec3 vN;varying vec3 vP;void main(){'+
+      'float f=pow(1.0-abs(dot(normalize(vN),normalize(-vP))),2.4);'+
+      'gl_FragColor=vec4(vec3(0.30,0.55,1.0)*f*2.0,f*0.9);}',
+    transparent:true,blending:THREE.AdditiveBlending,side:THREE.BackSide,depthWrite:false}));
+  earthGrp.add(atmo);
+  earthGrp.position.set(300,-165,-268);earthGrp.rotation.z=.24;
+  scene.add(earthGrp);
+})();
+
+/* ══════════ 灯光 ══════════ */
+const hemi=new THREE.HemisphereLight(0x243447,0x05060a,0.58);scene.add(hemi);
+const key=new THREE.DirectionalLight(0xeef4ff,2.35);
+key.position.set(-4.5,6.5,-4.0);
+key.castShadow=true;key.shadow.mapSize.set(2048,2048);
+key.shadow.camera.left=-5;key.shadow.camera.right=5;
+key.shadow.camera.top=5;key.shadow.camera.bottom=-5;
+key.shadow.camera.near=1;key.shadow.camera.far=22;
+key.shadow.camera.updateProjectionMatrix();
+key.shadow.normalBias=0.02;key.shadow.bias=-0.0004;
+scene.add(key);
+const rimL=new THREE.DirectionalLight(0x2e7fff,1.5);rimL.position.set(5,3.5,5.5);scene.add(rimL);
+const under=new THREE.PointLight(0x2e8bff,2.6,4.5,2);under.position.set(0,0.14,0.2);scene.add(under);
+const explodeFill=new THREE.DirectionalLight(0xdfeaff,0);explodeFill.position.set(-4,6,3);
+scene.add(explodeFill);
+
+/* ══════════ 装配 ══════════ */
+const carRoot=new THREE.Group();carRoot.name='carRoot';rig.add(carRoot);
+const coreBody=buildCoreBody();
+const noseCover=buildNoseCover();
+const sp=buildSidepods(),sidepodR=sp[0],sidepodL=sp[1];
+const engineCover=buildEngineCover();
+const frontWing=buildFrontWing();
+const rearWing=buildRearWing();
+const halo=buildHalo();
+const bb=buildBargeboards(),bargeR=bb[0],bargeL=bb[1];
+const wheels=buildWheels();
+const tub=buildTub(),cockpit=buildCockpit(),battery=buildBattery();
+const motors=buildMotors(),floorGrp=buildFloor(),radiators=buildRadiators();
+carRoot.add(coreBody,noseCover,sidepodR,sidepodL,engineCover,
+  frontWing,rearWing,halo,bargeR,bargeL,tub,cockpit,battery,motors,floorGrp,radiators);
+wheels.forEach(function(w){carRoot.add(w);});
+
+/* r128 不做输入色彩空间转换：所有手写 hex 按 sRGB 解释，统一转到线性 */
+function convertColors(root){
+  const seen=[];
+  root.traverse(function(o){
+    if(!o.isMesh)return;
+    const ms=Array.isArray(o.material)?o.material:[o.material];
+    ms.forEach(function(m){
+      if(!m||seen.indexOf(m)>=0)return;seen.push(m);
+      if(m.color)m.color.convertSRGBToLinear();
+      if(m.emissive)m.emissive.convertSRGBToLinear();
+    });
+  });
+}
+convertColors(carRoot);convertColors(stageGrp);
+scene.background.convertSRGBToLinear();
+
+[hemi,key,rimL,under,explodeFill].forEach(function(l){l.color.convertSRGBToLinear();});
+hemi.groundColor.convertSRGBToLinear();
+/* 半透明件不投硬阴影（深度材质不读 opacity，否则 45% 透明的蓝件会落下实心黑影） */
+carRoot.traverse(function(o){
+  if(o.isMesh&&o.material&&o.material.transparent&&o.material.depthWrite===false)o.castShadow=false;
+});
+
+/* 环境贴图：两套预烘焙 */
+const pmrem=new THREE.PMREMGenerator(renderer);
+const envDark=pmrem.fromScene(buildStudioEnv(),0.04).texture;
+const envLight=pmrem.fromScene(buildStudioEnvLight(),0.04).texture;
+scene.environment=envDark;
+pmrem.dispose();
+renderer.initTexture(envDark);renderer.initTexture(envLight);
+
+/* 记录各材质 envMapIntensity 基准（浅色影棚按比例压暗，防黑漆被白房洗灰） */
+const envMats=[];
+carRoot.traverse(function(o){
+  if(!o.isMesh)return;
+  const ms=Array.isArray(o.material)?o.material:[o.material];
+  ms.forEach(function(m){
+    if(m&&'envMapIntensity' in m&&!envMats.some(e=>e.m===m))envMats.push({m:m,dark:m.envMapIntensity});
+  });
+});
+
+/* ══════════ 拆解 ══════════ */
+const EXPLODE=[
+  {o:noseCover,v:V3(0,0.30,-0.95)},{o:engineCover,v:V3(0,0.95,0.45)},
+  {o:sidepodR,v:V3(0.90,0.12,0)},{o:sidepodL,v:V3(-0.90,0.12,0)},
+  {o:halo,v:V3(0,1.35,0.12)},{o:bargeR,v:V3(1.10,0.18,-0.15)},{o:bargeL,v:V3(-1.10,0.18,-0.15)},
+  {o:frontWing,v:V3(0,-0.03,-1.05)},{o:rearWing,v:V3(0,0.60,1.10)},
+  {o:wheels[1],v:V3(0.75,0,0)},{o:wheels[0],v:V3(-0.75,0,0)},
+  {o:wheels[3],v:V3(0.75,0,0)},{o:wheels[2],v:V3(-0.75,0,0)},
+  {o:floorGrp,v:V3(0,-0.30,0.15)},{o:battery,v:V3(0,0.30,-0.40)},
+  {o:motors,v:V3(0,0.28,0.60)},{o:radiators,v:V3(0,0.12,0)},{o:cockpit,v:V3(0,0.55,0.05)}
+];
+EXPLODE.forEach(function(e){e.base=e.o.position.clone();});
+let exT=0,exN=0;
+function applyExplode(t){
+  EXPLODE.forEach(function(e){
+    e.o.position.set(e.base.x+e.v.x*t,e.base.y+e.v.y*t,e.base.z+e.v.z*t);});
+  carRoot.position.y=0.14*t;
+  explodeFill.intensity=1.1*t;
+}
+
+/* ══════════ 呼吸光效 ══════════ */
+const glowPulse=[];
+function regGlow(m,base,amp,speed,phase){
+  glowPulse.push({m:m,base:base,amp:amp,speed:speed,phase:phase,dB:base,dA:amp});
+}
+wheels.forEach(function(w,i){
+  if(w.userData.glowRing)regGlow(w.userData.glowRing.material,3.3,0.7,1.5,i*1.3);
+});
+regGlow(neonRing.material,4.2,0.45,0.8,0);
+const tailRing=floorGrp.getObjectByName('tailRing');
+if(tailRing)regGlow(tailRing.material,3.6,0.8,1.2,2.1);
+
+/* ══════════ 后期：泛光 + 景深 ══════════ */
+const fs={scene:new THREE.Scene(),cam:new THREE.OrthographicCamera(-1,1,1,-1,0,1),
+  mesh:new THREE.Mesh(new THREE.PlaneGeometry(2,2),null)};
+fs.scene.add(fs.mesh);
+const VERT='varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}';
+const matBright=new THREE.ShaderMaterial({
+  uniforms:{tD:{value:null},uT:{value:0.72},uS:{value:0.40}},
+  vertexShader:VERT,
+  fragmentShader:'uniform sampler2D tD;uniform float uT;uniform float uS;varying vec2 vUv;'+
+    'void main(){vec3 c=texture2D(tD,vUv).rgb;float l=dot(c,vec3(0.2126,0.7152,0.0722));'+
+    'gl_FragColor=vec4(c*smoothstep(uT,uT+uS,l),1.0);}'});
+const matBlur=new THREE.ShaderMaterial({
+  uniforms:{tD:{value:null},uDir:{value:new THREE.Vector2(1,0)},uTexel:{value:new THREE.Vector2()}},
+  vertexShader:VERT,
+  fragmentShader:'uniform sampler2D tD;uniform vec2 uDir;uniform vec2 uTexel;varying vec2 vUv;'+
+    'void main(){float w0=0.227,w1=0.194,w2=0.121,w3=0.054,w4=0.016;'+
+    'vec3 s=texture2D(tD,vUv).rgb*w0;vec2 o;'+
+    'o=uDir*uTexel*1.6;s+=texture2D(tD,vUv+o).rgb*w1;s+=texture2D(tD,vUv-o).rgb*w1;'+
+    'o=uDir*uTexel*3.2;s+=texture2D(tD,vUv+o).rgb*w2;s+=texture2D(tD,vUv-o).rgb*w2;'+
+    'o=uDir*uTexel*4.8;s+=texture2D(tD,vUv+o).rgb*w3;s+=texture2D(tD,vUv-o).rgb*w3;'+
+    'o=uDir*uTexel*6.4;s+=texture2D(tD,vUv+o).rgb*w4;s+=texture2D(tD,vUv-o).rgb*w4;'+
+    'gl_FragColor=vec4(s,1.0);}'});
+/* 合成：13 抽样圆盘景深（半径下限 0.62px 兼作抗锯齿）→ 泛光 → 暗角 → sRGB */
+const matComp=new THREE.ShaderMaterial({
+  uniforms:{tD:{value:null},tDepth:{value:null},tA:{value:null},tB:{value:null},
+    uStr:{value:0.55},uVig:{value:0.30},uTime:{value:0},
+    uFocus:{value:6},uDof:{value:0},uNear:{value:CAM_NEAR},uFar:{value:CAM_FAR},
+    uRes:{value:new THREE.Vector2(1,1)}},
+  vertexShader:VERT,
+  fragmentShader:
+    'uniform sampler2D tD;uniform sampler2D tDepth;uniform sampler2D tA;uniform sampler2D tB;'+
+    'uniform float uStr,uVig,uTime,uFocus,uDof,uNear,uFar;uniform vec2 uRes;varying vec2 vUv;'+
+    'vec3 s2(vec3 c){c=max(c,vec3(0.0));'+
+    'return mix(c*12.92,1.055*pow(c,vec3(1.0/2.4))-0.055,step(vec3(0.0031308),c));}'+
+    'float vz(vec2 uv){float z=texture2D(tDepth,uv).x;float n=z*2.0-1.0;'+
+    'return 2.0*uNear*uFar/(uFar+uNear-n*(uFar-uNear));}'+
+    'void main(){float d=vz(vUv);'+
+    'float coc=0.62+clamp(abs(d-uFocus)/max(d,0.25),0.0,1.0)*15.0*uDof;'+
+    'vec2 px=vec2(coc)/uRes;vec3 col=texture2D(tD,vUv).rgb;vec2 k;'+
+    'k=vec2(-0.94,-0.40);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2(-0.57, 0.78);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2( 0.20,-0.92);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2( 0.74, 0.62);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2(-0.24,-0.24);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2( 0.42, 0.18);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2(-0.68, 0.10);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2( 0.92,-0.22);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2(-0.10, 0.94);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2( 0.10,-0.56);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2(-0.42,-0.82);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'k=vec2( 0.60,-0.66);col+=texture2D(tD,vUv+k*px).rgb;'+
+    'col/=13.0;'+
+    'vec3 g=texture2D(tA,vUv).rgb*0.62+texture2D(tB,vUv).rgb*0.90;'+
+    'col+=g*uStr;'+
+    'vec2 q=vUv-0.5;col*=1.0-uVig*dot(q,q)*2.6;'+
+    'float n=fract(sin(dot(vUv*vec2(1.0,1.3)+uTime*0.0007,vec2(12.9898,78.233)))*43758.5453);'+
+    'col+=(n-0.5)*0.006;'+
+    'gl_FragColor=vec4(s2(col),1.0);}'});
+
+let rtScene=null,rtA1=null,rtA2=null,rtB1=null,rtB2=null;
+const HF=(W2||renderer.extensions.has('OES_texture_half_float'))?THREE.HalfFloatType:THREE.UnsignedByteType;
+const DOF_OK=W2||renderer.extensions.has('WEBGL_depth_texture');
+function makeRT(w,h,depth){
+  const o={minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,
+    format:THREE.RGBAFormat,type:HF,depthBuffer:true,stencilBuffer:false};
+  if(depth&&DOF_OK)o.depthTexture=new THREE.DepthTexture(w,h,THREE.UnsignedIntType);
+  return new THREE.WebGLRenderTarget(w,h,o);
+}
+function sizeRTs(){
+  const pr=renderer.getPixelRatio();
+  const w=Math.max(2,Math.floor(window.innerWidth*pr));
+  const h=Math.max(2,Math.floor(window.innerHeight*pr));
+  [rtScene,rtA1,rtA2,rtB1,rtB2].forEach(function(r){if(r)r.dispose();});
+  rtScene=makeRT(w,h,true);
+  rtA1=makeRT(Math.max(2,w>>1),Math.max(2,h>>1),false);
+  rtA2=makeRT(Math.max(2,w>>1),Math.max(2,h>>1),false);
+  rtB1=makeRT(Math.max(2,w>>2),Math.max(2,h>>2),false);
+  rtB2=makeRT(Math.max(2,w>>2),Math.max(2,h>>2),false);
+  matComp.uniforms.uRes.value.set(w,h);
+}
+function pass(mat,target){
+  fs.mesh.material=mat;renderer.setRenderTarget(target);renderer.clear();
+  renderer.render(fs.scene,fs.cam);
+}
+function renderPipeline(t){
+  renderer.setRenderTarget(rtScene);renderer.clear();renderer.render(scene,camera);
+  matBright.uniforms.tD.value=rtScene.texture;pass(matBright,rtA1);
+  matBlur.uniforms.tD.value=rtA1.texture;
+  matBlur.uniforms.uTexel.value.set(1/rtA1.width,1/rtA1.height);
+  matBlur.uniforms.uDir.value.set(1,0);pass(matBlur,rtA2);
+  matBlur.uniforms.tD.value=rtA2.texture;
+  matBlur.uniforms.uDir.value.set(0,1);pass(matBlur,rtA1);
+  matBlur.uniforms.tD.value=rtA1.texture;
+  matBlur.uniforms.uTexel.value.set(1/rtB1.width,1/rtB1.height);
+  matBlur.uniforms.uDir.value.set(1,0);pass(matBlur,rtB1);
+  matBlur.uniforms.tD.value=rtB1.texture;
+  matBlur.uniforms.uDir.value.set(0,1);pass(matBlur,rtB2);
+  matBlur.uniforms.tD.value=rtB2.texture;
+  matBlur.uniforms.uDir.value.set(1,0);pass(matBlur,rtB1);
+  matComp.uniforms.tD.value=rtScene.texture;
+  matComp.uniforms.tDepth.value=rtScene.depthTexture||null;
+  matComp.uniforms.tA.value=rtA1.texture;
+  matComp.uniforms.tB.value=rtB1.texture;
+  matComp.uniforms.uTime.value=t;
+  pass(matComp,null);
+}
+
+/* ══════════ 机位（车头朝 -Z） ══════════ */
+const VIEWS={
+  hero:{p:V3(-3.4,1.5,4.5),t:V3(0,0.42,0.1)},
+  front:{p:V3(0.3,0.72,-5.8),t:V3(0,0.36,-2.0)},
+  side:{p:V3(-5.4,1.0,0.5),t:V3(0,0.44,0.1)},
+  explode:{p:V3(-5.4,3.2,5.6),t:V3(0,0.88,0.15)},
+  specs:{p:V3(3.8,2.0,-3.2),t:V3(0,0.68,0.2)},
+  finale:{p:V3(0,0.65,-6.6),t:V3(0,0.55,0.5)},
+  top:{p:V3(0.01,9.0,0.01),t:V3(0,0,0)},
+  detail:{p:V3(-1.5,0.8,-3.4),t:V3(0,0.35,-2.2)}
+};
+const SECTION_CAM=['hero','front','side','explode','specs','finale'];
+const MATS={
+  paint:{view:{p:V3(-1.55,0.95,1.35),t:V3(-0.45,0.50,0.55)},
+    title:'钢琴黑车漆',en:'PIANO BLACK',
+    rows:[['清漆层','1.00'],['粗糙度','0.16'],['金属度','0.25'],['环境反射','1.35×']],
+    note:'顶部三条长灯箱在曲面上被拉成连续高光带——这条带子决定黑漆是"湿"还是"哑"。'},
+  jelly:{view:{p:V3(1.55,1.25,3.05),t:V3(0.55,0.80,2.05)},
+    title:'果冻蓝',en:'JELLY BLUE',
+    rows:[['透光率','0.45'],['粗糙度','0.05'],['自发光','0.28'],['深度写入','关']],
+    note:'关掉深度写入才能层层透叠：尾翼主翼、大端板、下层小翼重叠处能看穿三层，像啫喱不像实心塑料。'},
+  wheel:{view:{p:V3(-1.95,0.62,-2.35),t:V3(-1.01,0.34,-1.75)},
+    title:'光晕轮毂',en:'TURBINE WHEEL',
+    rows:[['轮毂罩','程序化涡轮贴图'],['发光环','自发光 3.4'],['胎面','光头胎'],['胎壁','条码贴纸']],
+    note:'涡轮叶片是贴图不是几何体——九片叶带蓝色叶尖拉丝，比建模省两个数量级的面数，看起来还更干净。'}
+};
+
+/* ══════════ 相机：滚动叙事 + 自由环视 ══════════ */
+const VIEW_SCALE=1.46;   // 立方半对角 5.54，机位需整体外扩到框外
+function aspectScale(){
+  const a=window.innerWidth/window.innerHeight;
+  return VIEW_SCALE*Math.min(2.4,Math.pow(Math.max(1,(16/9)/a),0.85));
+}
+const camP=new THREE.Vector3(),camT=new THREE.Vector3();
+function viewToWorld(v,outP,outT){
+  const s=aspectScale();
+  outT.copy(v.t);
+  outP.set(v.t.x+(v.p.x-v.t.x)*s,v.t.y+(v.p.y-v.t.y)*s,v.t.z+(v.p.z-v.t.z)*s);
+}
+const orb={on:false,theta:0,phi:0,dist:6,target:new THREE.Vector3(),
+  tTheta:0,tPhi:0,tDist:6,tTarget:new THREE.Vector3(),drag:false,lx:0,ly:0,pinch:0};
+const deck=document.getElementById('deck');
+const hint=document.getElementById('hint');
+const card=document.getElementById('card');
+function enterOrbit(){
+  if(orb.on||intro.run)return;
+  orb.on=true;
+  const off=new THREE.Vector3().subVectors(camera.position,camT);
+  orb.dist=orb.tDist=Math.max(2.2,off.length());
+  orb.phi=orb.tPhi=Math.acos(clamp(off.y/off.length(),-1,1));
+  orb.theta=orb.tTheta=Math.atan2(off.x,off.z);
+  orb.target.copy(camT);orb.tTarget.copy(camT);
+  deck.classList.add('show');hint.classList.add('dim');
+  renderer.domElement.style.touchAction='none';
+}
+function exitOrbit(){
+  orb.on=false;renderer.domElement.style.touchAction='pan-y';
+  deck.classList.remove('show');card.classList.remove('show');
+  document.querySelectorAll('#views button,#mats button').forEach(function(b){b.classList.remove('on');});
+  onScroll(true);
+}
+function orbitTo(v,raw){
+  const p=new THREE.Vector3(),t=new THREE.Vector3();
+  if(raw){t.copy(v.t);p.copy(v.p);}else viewToWorld(v,p,t);
+  const off=new THREE.Vector3().subVectors(p,t);
+  orb.tDist=off.length();
+  orb.tPhi=clamp(Math.acos(off.y/orb.tDist),0.12,Math.PI/2-0.04);
+  orb.tTheta=Math.atan2(off.x,off.z);
+  orb.tTarget.copy(t);
+}
+function orbitCam(){
+  orb.theta=lerp(orb.theta,orb.tTheta,.10);
+  orb.phi=lerp(orb.phi,orb.tPhi,.10);
+  orb.dist=lerp(orb.dist,orb.tDist,.09);
+  orb.target.lerp(orb.tTarget,.09);
+  const sp=Math.sin(orb.phi);
+  camera.position.set(orb.target.x+orb.dist*sp*Math.sin(orb.theta),
+    orb.target.y+orb.dist*Math.cos(orb.phi),
+    orb.target.z+orb.dist*sp*Math.cos(orb.theta));
+  camera.lookAt(orb.target);
+  camT.copy(orb.target);
+}
+const dom=renderer.domElement;
+const ptOf=e=>e.touches?{x:e.touches[0].clientX,y:e.touches[0].clientY}:{x:e.clientX,y:e.clientY};
+let downAt=null,downType='mouse';
+dom.addEventListener('pointerdown',function(e){
+  if(intro.run)return;
+  const p=ptOf(e);downAt=[p.x,p.y];downType=e.pointerType||'mouse';
+  orb.drag=true;orb.lx=p.x;orb.ly=p.y;
+});
+window.addEventListener('pointermove',function(e){
+  if(!orb.drag||intro.run)return;
+  const p=ptOf(e);
+  if(!orb.on&&downAt){
+    // 触屏：只有横向为主的拖动才接管镜头，竖向留给页面滚动
+    const dx=p.x-downAt[0],dy=p.y-downAt[1],len=Math.hypot(dx,dy);
+    const take=downType!=='touch'?len>6:(len>10&&Math.abs(dx)>Math.abs(dy));
+    if(take){enterOrbit();orb.lx=p.x;orb.ly=p.y;}
+  }
+  if(!orb.on)return;
+  orb.tTheta-=(p.x-orb.lx)*0.0052;
+  orb.tPhi=clamp(orb.tPhi-(p.y-orb.ly)*0.0045,0.12,Math.PI/2-0.04);
+  orb.lx=p.x;orb.ly=p.y;
+});
+window.addEventListener('pointerup',function(){orb.drag=false;downAt=null;});
+dom.addEventListener('wheel',function(e){
+  if(!orb.on)return;
+  e.preventDefault();
+  orb.tDist=clamp(orb.tDist*(1+Math.sign(e.deltaY)*0.09),2.0,26);
+},{passive:false});
+dom.addEventListener('touchstart',function(e){
+  if(e.touches.length===2)orb.pinch=Math.hypot(
+    e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+},{passive:true});
+dom.addEventListener('touchmove',function(e){
+  if(e.touches.length===2&&orb.pinch){
+    if(!orb.on)enterOrbit();
+    e.preventDefault();
+    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,
+      e.touches[0].clientY-e.touches[1].clientY);
+    orb.tDist=clamp(orb.tDist*(orb.pinch/d),2.0,26);orb.pinch=d;
+  }
+},{passive:false});
+dom.addEventListener('touchend',function(){orb.pinch=0;});
+
+/* ══════════ 控制台 ══════════ */
+const cT=document.getElementById('c-t'),cE=document.getElementById('c-e'),
+  cL=document.getElementById('c-l'),cN=document.getElementById('c-n');
+document.querySelectorAll('#views button').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(!orb.on)enterOrbit();
+    orbitTo(VIEWS[b.dataset.v]);card.classList.remove('show');
+    document.querySelectorAll('#views button').forEach(function(x){x.classList.toggle('on',x===b);});
+    document.querySelectorAll('#mats button').forEach(function(x){x.classList.remove('on');});
+  });
+});
+document.querySelectorAll('#mats button').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(!orb.on)enterOrbit();
+    const m=MATS[b.dataset.m];orbitTo(m.view,true);
+    cT.textContent=m.title;cE.textContent=m.en;
+    cL.innerHTML=m.rows.map(function(r){return '<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>';}).join('');
+    cN.textContent=m.note;card.classList.add('show');
+    document.querySelectorAll('#views button').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('#mats button').forEach(function(x){x.classList.toggle('on',x===b);});
+  });
+});
+const bEx=document.getElementById('b-ex');
+bEx.addEventListener('click',function(){
+  if(!orb.on)enterOrbit();
+  exT=exT>.5?0:1;
+  bEx.setAttribute('aria-pressed',exT>.5?'true':'false');
+  bEx.textContent=exT>.5?'收拢装配':'展开拆解';
+  orbitTo(exT>.5?VIEWS.explode:VIEWS.hero);
+  card.classList.remove('show');
+  document.querySelectorAll('#views button,#mats button').forEach(function(x){x.classList.remove('on');});
+});
+let spinOn=false;
+const bSpin=document.getElementById('b-spin');
+bSpin.addEventListener('click',function(){
+  spinOn=!spinOn;
+  bSpin.setAttribute('aria-pressed',spinOn?'true':'false');
+  bSpin.textContent=spinOn?'停止转动':'车轮转动';
+});
+document.getElementById('b-back').addEventListener('click',function(){
+  exT=0;bEx.setAttribute('aria-pressed','false');bEx.textContent='展开拆解';
+  exitOrbit();
+});
+
+/* ══════════ 暗夜 / 浅色影棚 ══════════ */
+const SET=function(c,hex){c.setHex(hex).convertSRGBToLinear();};
+const platformLightMat=new THREE.MeshPhysicalMaterial({color:0xe9edf3,roughness:0.32,
+  metalness:0.35,clearcoat:0.4,clearcoatRoughness:0.15,envMapIntensity:0.9*EI,
+  emissive:0xe2e8f0,emissiveIntensity:0.28});
+platformLightMat.color.convertSRGBToLinear();
+platformLightMat.emissive.convertSRGBToLinear();
+const platformDarkMat=platform.material;
+let envMode='dark';
+const bEnv=document.getElementById('b-env');
+function applyEnv(mode){
+  envMode=mode;
+  const L=mode==='light';
+  SET(scene.background,L?0xdfe5ef:0x03050a);
+  scene.environment=L?envLight:envDark;
+  envMats.forEach(function(e){e.m.envMapIntensity=L?e.dark*0.55*(0.42/0.75):e.dark;});
+  renderer.toneMappingExposure=L?0.86:1.05;
+  hemi.intensity=L?0.25:0.58;
+  SET(hemi.color,L?0xffffff:0x243447);
+  SET(hemi.groundColor,L?0xaab4c2:0x05060a);
+  key.intensity=L?1.7:2.35;
+  rimL.intensity=L?0.85:1.5;
+  under.intensity=L?0:2.6;
+  platform.material=L?platformLightMat:platformDarkMat;
+  SET(neonRing.material.color,L?0x9fb6d8:0x061224);
+  innerRing.material.emissiveIntensity=L?0.7:1.6;
+  // 立方：暗夜是蓝色玻璃取景框，白棚是浅色实体框
+  SET(beamMat.color,L?0xb9c2cf:0x1b212b);
+  beamMat.roughness=L?0.34:0.18;
+  edgeGlowMat.emissiveIntensity=L?0.9:3.0;
+  paneUni.uCol.value.setHex(L?0x8fa6c4:0x4f9dff).convertSRGBToLinear();
+  paneUni.uInt.value=L?0.30:0.55;
+  paneUni.uGrid.value=L?0.05:0.10;
+  paneUni.uBase.value=L?0.006:0.012;
+  pool.material.opacity=L?0.05:0.16;
+  if(window.__starMat)window.__starMat.uniforms.uFade.value=L?0:1;
+  earthGrp.visible=!L;
+  glowPulse.forEach(function(p){p.base=p.dB*(L?0.3:1);p.amp=p.dA*(L?0.45:1);});
+  matBright.uniforms.uT.value=L?1.05:0.72;
+  matComp.uniforms.uStr.value=L?0.28:0.55;
+  matComp.uniforms.uVig.value=L?0.16:0.30;
+  document.body.classList.toggle('lightenv',L);
+  bEnv.setAttribute('aria-pressed',L?'true':'false');
+  bEnv.textContent=L?'太空模式':'白棚模式';
+}
+bEnv.addEventListener('click',function(){applyEnv(envMode==='dark'?'light':'dark');});
+
+/* ══════════ 滚动叙事 ══════════ */
+const secs=[].slice.call(document.querySelectorAll('.sec'));
+const dots=[].slice.call(document.querySelectorAll('#dots i'));
+let curIdx=0;
+const targetView={p:new THREE.Vector3(),t:new THREE.Vector3()};
+function onScroll(force){
+  const idx=clamp(Math.round(window.scrollY/window.innerHeight),0,secs.length-1);
+  if(idx!==curIdx||force){
+    curIdx=idx;
+    viewToWorld(VIEWS[SECTION_CAM[idx]],targetView.p,targetView.t);
+    if(!orb.on)exT=(idx===3||idx===4)?1:0;
+    bEx.setAttribute('aria-pressed',exT>.5?'true':'false');
+    bEx.textContent=exT>.5?'收拢装配':'展开拆解';
+  }
+  const h=window.innerHeight;
+  secs.forEach(function(s,i){
+    const r=s.getBoundingClientRect();
+    const c=r.top+r.height/2-h/2;
+    const k=clamp(1-Math.abs(c)/(h*0.55),0,1);
+    const cp=s.firstElementChild;
+    cp.style.opacity=k<0.12?0:smooth(k);
+    cp.style.transform='translateY('+(1-smooth(k))*16+'px)';
+  });
+  dots.forEach(function(d,i){d.classList.toggle('on',i===curIdx);});
+  if(window.scrollY>60)hint.classList.add('dim');
+  else if(!orb.on)hint.classList.remove('dim');
+}
+window.addEventListener('scroll',function(){onScroll(false);},{passive:true});
+
+/* ══════════ 开场 ══════════ */
+const intro={t:0,dur:RM?0.1:5.8,run:false};
+const INTRO_P=V3(-38,20,52);
+function startIntro(){intro.t=0;intro.run=true;}
+
+/* ══════════ 主循环 ══════════ */
+const clock=new THREE.Clock();
+let dofNow=0;
+function frame(){
+  requestAnimationFrame(frame);
+  const dt=Math.min(clock.getDelta(),0.05),T=clock.elapsedTime;
+
+  if(intro.run){
+    intro.t+=dt;
+    const k=clamp(intro.t/intro.dur,0,1),e=easeIO(k);
+    viewToWorld(VIEWS.hero,targetView.p,targetView.t);
+    camera.position.lerpVectors(INTRO_P,targetView.p,Math.pow(e,1.25));
+    camT.lerpVectors(V3(0,1.2,0),targetView.t,e);
+    camera.lookAt(camT);
+    if(k>=1)intro.run=false;
+  } else if(orb.on){
+    orbitCam();
+  } else {
+    camera.position.lerp(targetView.p,0.055);
+    camT.lerp(targetView.t,0.055);
+    camera.lookAt(camT);
+  }
+
+  exN=lerp(exN,exT,RM?1:0.06);applyExplode(exN);
+  rig.position.y=Math.sin(T*0.42)*0.030;
+  rig.rotation.z=Math.sin(T*0.31)*0.0042;
+  rig.rotation.x=Math.sin(T*0.25+1.1)*0.0030;
+  if(earthGrp.userData.globe)earthGrp.userData.globe.rotation.y+=dt*0.006;
+  if(spinOn)wheels.forEach(function(w){w.userData.spinner.rotation.x=-T*16;});
+  glowPulse.forEach(function(p){
+    p.m.emissiveIntensity=p.base+p.amp*Math.sin(T*p.speed+p.phase);
+  });
+
+  const dist=camera.position.distanceTo(camT);
+  dofNow=lerp(dofNow,clamp((3.6-dist)/2.2,0,1),0.08);
+  matComp.uniforms.uFocus.value=dist;
+  matComp.uniforms.uDof.value=DOF_OK?dofNow:0;
+
+  renderPipeline(T);
+}
+
+function resize(){
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  sizeRTs();
+  onScroll(true);
+}
+window.addEventListener('resize',resize);
+
+/* ══════════ 启动 ══════════ */
+const veil=document.getElementById('veil'),vBar=document.getElementById('v-bar'),
+  vTxt=document.getElementById('v-txt');
+const steps=['正在放样车体曲面','正在解算空力套件','正在烘焙影棚环境','正在装配四轮与内构'];
+let si=0;
+vBar.style.transform='scaleX(0.18)';
+if(window.scrollTo)window.scrollTo(0,0);
+resize();
+viewToWorld(VIEWS.hero,targetView.p,targetView.t);
+camT.copy(targetView.t);
+const tick=setInterval(function(){
+  si++;
+  vBar.style.transform='scaleX('+Math.min(1,0.18+si*0.28)+')';
+  if(si<steps.length)vTxt.textContent=steps[si];
+  if(si>=steps.length){
+    clearInterval(tick);
+    setTimeout(function(){veil.classList.add('gone');startIntro();},260);
+  }
+},380);
+frame();
+})();
+
+</script>
+
+
+</body></html>
